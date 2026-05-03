@@ -36,7 +36,7 @@ export default function PortfolioAdmin() {
 
   const resetForm = () => {
     setFormData({
-      title: "", location: "", category: "", description: "", area: "", duration: "", year: "", image: "", images: [], services: [], features: []
+      title: "", titleEn: "", location: "", locationEn: "", category: "", categoryEn: "", description: "", descriptionEn: "", area: "", areaEn: "", duration: "", durationEn: "", year: "", image: "", images: [], services: [], features: []
     })
     setEditingId(null)
   }

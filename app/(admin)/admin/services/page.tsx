@@ -47,15 +47,18 @@ export default function ServicesAdmin() {
   }, [])
 
   const resetForm = () => {
-    setFormData({ title: "", description: "", details: "", icon: "", image: "", gallery: [], features: [], benefits: [] })
+    setFormData({ title: "", titleEn: "", description: "", descriptionEn: "", details: "", detailsEn: "", icon: "", image: "", gallery: [], features: [], benefits: [] })
     setEditingId(null)
   }
 
   const handleEdit = (service: any) => {
     setFormData({
-      title: service.title,
-      description: service.description,
-      details: service.details,
+      title: service.title || "",
+      titleEn: service.titleEn || "",
+      description: service.description || "",
+      descriptionEn: service.descriptionEn || "",
+      details: service.details || "",
+      detailsEn: service.detailsEn || "",
       icon: service.icon || "",
       image: service.image || "",
       gallery: service.gallery || [],
