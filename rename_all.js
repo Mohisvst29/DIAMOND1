@@ -6,11 +6,11 @@ function replaceInFile(filePath) {
   let original = content;
 
   // Replacements
-  content = content.replace(/DGR Diamond Growth/g, "Diamond Growth");
+  content = content.replace(/DGR النمو الماسي/g, "النمو الماسي");
   content = content.replace(/DGR /g, ""); // "شركة DGR " -> "شركة "
-  content = content.replace(/DGR/g, "Diamond Growth");
-  content = content.replace(/صالح الأزهري/g, "Diamond Growth");
-  content = content.replace(/صالح الازهري/g, "Diamond Growth");
+  content = content.replace(/DGR/g, "النمو الماسي");
+  content = content.replace(/صالح الأزهري/g, "النمو الماسي");
+  content = content.replace(/صالح الازهري/g, "النمو الماسي");
 
   if (content !== original) {
     fs.writeFileSync(filePath, content, 'utf8');

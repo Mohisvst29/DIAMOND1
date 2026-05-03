@@ -50,7 +50,7 @@ export default function AboutSection({ settings }: { settings?: any }) {
             <p className="text-lg text-[#2D3640] leading-relaxed mb-6 whitespace-pre-line">
               {locale === 'en' && settings?.home?.aboutSummaryEn 
                 ? settings.home.aboutSummaryEn 
-                : settings?.home?.aboutSummary || "شركة Diamond Growth هي شركة مقاولات متخصصة في الأعمال المدنية، الاتصالات، أنظمة التيار الخفيف، والخدمات الكهروميكانيكية.\n\nالمقر الرئيسي في الأردن، منذ عام 2012\nHead office in Jordan, since 2012"}
+                : settings?.home?.aboutSummary || "شركة النمو الماسي هي شركة مقاولات متخصصة في الأعمال المدنية، الاتصالات، أنظمة التيار الخفيف، والخدمات الكهروميكانيكية.\n\nالمقر الرئيسي في الأردن، منذ عام 2012\nHead office in Jordan, since 2012"}
             </p>
 
             <div

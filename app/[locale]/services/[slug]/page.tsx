@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   }
 
   return {
-    title: `${service.title} - Diamond Growth`,
+    title: `${service.title} - النمو الماسي`,
     description: service.description,
   }
 }

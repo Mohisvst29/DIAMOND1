@@ -32,24 +32,24 @@ export async function generateMetadata(): Promise<Metadata> {
   } catch (e) {}
 
   return {
-    title: `شركة Diamond Growth للمقاولات والاتصالات بالسعودية والأردن`,
-    description: `شركة Diamond Growth متخصصة في الأعمال المدنية، الاتصالات، أنظمة التيار الخفيف، والخدمات الكهروميكانيكية في السعودية والأردن والمملكة العربية السعودية.`,
-    keywords: [`Diamond Growth`, `مقاولات بالسعودية والأردن`, `أنظمة التيار الخفيف`, `إنشاء أبراج الاتصالات`, `أنظمة المراقبة`, `الأعمال الكهروميكانيكية`],
+    title: `شركة النمو الماسي للمقاولات والاتصالات بالسعودية والأردن`,
+    description: `شركة النمو الماسي متخصصة في الأعمال المدنية، الاتصالات، أنظمة التيار الخفيف، والخدمات الكهروميكانيكية في السعودية والأردن والمملكة العربية السعودية.`,
+    keywords: [`النمو الماسي`, `مقاولات بالسعودية والأردن`, `أنظمة التيار الخفيف`, `إنشاء أبراج الاتصالات`, `أنظمة المراقبة`, `الأعمال الكهروميكانيكية`],
     generator: "Next.js",
     icons: { icon: "/favicon.png", shortcut: "/favicon.png" },
     openGraph: {
-      title: `شركة Diamond Growth للمقاولات والاتصالات بالسعودية والأردن`,
-      description: `شركة Diamond Growth متخصصة في الأعمال المدنية، الاتصالات، أنظمة التيار الخفيف، والخدمات الكهروميكانيكية. 📞 للتواصل: ${phone}`,
+      title: `شركة النمو الماسي للمقاولات والاتصالات بالسعودية والأردن`,
+      description: `شركة النمو الماسي متخصصة في الأعمال المدنية، الاتصالات، أنظمة التيار الخفيف، والخدمات الكهروميكانيكية. 📞 للتواصل: ${phone}`,
       url: "https://www.nmudiamond.com/",
-      siteName: "Diamond Growth",
-      images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: `شركة Diamond Growth للمقاولات` }],
+      siteName: "النمو الماسي",
+      images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: `شركة النمو الماسي للمقاولات` }],
       locale: "ar_SA",
       type: "website",
     },
     twitter: {
       card: "summary_large_image",
-      title: `شركة Diamond Growth للمقاولات والاتصالات بالسعودية والأردن`,
-      description: `شركة Diamond Growth متخصصة في الأعمال المدنية، الاتصالات، أنظمة التيار الخفيف. 📞 للتواصل: ${phone}`,
+      title: `شركة النمو الماسي للمقاولات والاتصالات بالسعودية والأردن`,
+      description: `شركة النمو الماسي متخصصة في الأعمال المدنية، الاتصالات، أنظمة التيار الخفيف. 📞 للتواصل: ${phone}`,
       images: ["/og-image.jpg"],
     },
   };
@@ -105,7 +105,7 @@ export default async function RootLayout({ children, params: { locale } }: { chi
         <link rel="icon" href="/favicon.png" />
         <link rel="shortcut icon" href="/favicon.png" />
         <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
-        <meta name="author" content={`Diamond Growth`} />
+        <meta name="author" content={`النمو الماسي`} />
         <meta name="telephone" content={phone} />
         
         <style dangerouslySetInnerHTML={{ __html: customCss }} />
@@ -131,10 +131,10 @@ export default async function RootLayout({ children, params: { locale } }: { chi
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Organization",
-              "name": `Diamond Growth`,
+              "name": `النمو الماسي`,
               "url": "https://www.nmudiamond.com/",
               "telephone": phone,
-              "description": `شركة Diamond Growth متخصصة في الأعمال المدنية، الاتصالات، أنظمة التيار الخفيف، والخدمات الكهروميكانيكية بالسعودية والأردن.`,
+              "description": `شركة النمو الماسي متخصصة في الأعمال المدنية، الاتصالات، أنظمة التيار الخفيف، والخدمات الكهروميكانيكية بالسعودية والأردن.`,
             }),
           }}
         />

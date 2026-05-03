@@ -8,7 +8,7 @@ dotenv.config({ path: path.join(__dirname, '../.env') });
 // Since we are running this using ts-node or node directly, we use raw schemas
 const SiteSettingsSchema = new mongoose.Schema({
   seo: {
-    title: { type: String, default: 'Diamond Growth' },
+    title: { type: String, default: 'النمو الماسي' },
     description: { type: String, default: '' },
     keywords: { type: String, default: '' },
   },
@@ -85,7 +85,7 @@ async function seed() {
   await SiteSettings.deleteMany({});
   await SiteSettings.create({
     seo: {
-      title: 'شركة Diamond Growth للمقاولات والاتصالات',
+      title: 'شركة النمو الماسي للمقاولات والاتصالات',
       description: 'متخصصون في الأعمال المدنية والكهروميكانيكية والاتصالات في السعودية والأردن',
       keywords: 'مقاولات, اتصالات, تيار خفيف, السعودية, الأردن'
     },
@@ -103,7 +103,7 @@ async function seed() {
     hero: [
       {
         image: '/hero-1.jpg', // we will use placeholders or current images if we know them
-        title: 'نحو مستقبل أفضل مع Diamond Growth',
+        title: 'نحو مستقبل أفضل مع النمو الماسي',
         subtitle: 'نبني رؤيتك بأعلى معايير الجودة والاحترافية في قطاع المقاولات والاتصالات'
       },
       {
@@ -114,13 +114,13 @@ async function seed() {
     ],
     about: {
       images: ['/about-1.jpg', '/about-2.jpg'],
-      content: 'تأسس المقر الرئيسي لشركة Diamond Growth للمقاولات في الأردن عام 2012، وانطلقت لاحقاً في عام 2023 لافتتاح فرعها في المملكة العربية السعودية.',
+      content: 'تأسس المقر الرئيسي لشركة النمو الماسي للمقاولات في الأردن عام 2012، وانطلقت لاحقاً في عام 2023 لافتتاح فرعها في المملكة العربية السعودية.',
       vision: 'أن نكون الخيار الأول في قطاع المقاولات والاتصالات في المنطقة.',
       mission: 'تقديم أعلى جودة للعملاء.',
       goals: 'التوسع المستمر والابتكار.'
     },
     home: {
-      aboutSummary: 'شركة Diamond Growth متخصصة في الأعمال المدنية، الاتصالات، أنظمة التيار الخفيف، والخدمات الكهروميكانيكية.'
+      aboutSummary: 'شركة النمو الماسي متخصصة في الأعمال المدنية، الاتصالات، أنظمة التيار الخفيف، والخدمات الكهروميكانيكية.'
     },
     covers: {
       about: '/cover-about.jpg',

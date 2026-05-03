@@ -9,9 +9,9 @@ import connectDB from "@/lib/db"
 import SiteSettings from "@/models/SiteSettings"
 
 export const metadata = {
-  title: "معرض المشاريع - Diamond Growth",
+  title: "معرض المشاريع - النمو الماسي",
   description:
-    "استعرض أفضل مشاريع شركة Diamond Growth في المقاولات، الأعمال المدنية، الاتصالات، وأنظمة التيار الخفيف في السعودية والأردن والمملكة.",
+    "استعرض أفضل مشاريع شركة النمو الماسي في المقاولات، الأعمال المدنية، الاتصالات، وأنظمة التيار الخفيف في السعودية والأردن والمملكة.",
 }
 
 export default async function ProjectsPage() {
@@ -27,9 +27,9 @@ export default async function ProjectsPage() {
   const bannerSubtitle = 'استعرض مجموعة من أفضل مشاريعنا المنجزة التي تعكس خبرتنا وجودة عملنا'
 
   const pageTitle =
-    "معرض المشاريع - Diamond Growth"
+    "معرض المشاريع - النمو الماسي"
   const pageDescription =
-    "استعرض أفضل مشاريع شركة Diamond Growth في المقاولات، الأعمال المدنية، الاتصالات، وأنظمة التيار الخفيف."
+    "استعرض أفضل مشاريع شركة النمو الماسي في المقاولات، الأعمال المدنية، الاتصالات، وأنظمة التيار الخفيف."
 
   const schema = {
     "@context": "https://schema.org",

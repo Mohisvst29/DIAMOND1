@@ -10,12 +10,12 @@ import connectDB from "@/lib/db"
 import SiteSettings from "@/models/SiteSettings"
 
 export const metadata = {
-  title: "من نحن - Diamond Growth",
+  title: "من نحن - النمو الماسي",
   description:
-    "شركة Diamond Growth هي شركة مقاولات تأسست في المملكة العربية السعودية عام 2023، متخصصة في الأعمال المدنية، الاتصالات، أنظمة التيار الخفيف، والخدمات الكهروميكانيكية.",
+    "شركة النمو الماسي هي شركة مقاولات تأسست في المملكة العربية السعودية عام 2023، متخصصة في الأعمال المدنية، الاتصالات، أنظمة التيار الخفيف، والخدمات الكهروميكانيكية.",
   keywords: [
     "من نحن",
-    "Diamond Growth",
+    "النمو الماسي",
     "شركة مقاولات بالسعودية والأردن",
     "الأعمال المدنية",
     "الاتصالات",
@@ -23,25 +23,25 @@ export const metadata = {
     "الكهروميكانيكية"
   ],
   openGraph: {
-    title: "من نحن - Diamond Growth",
+    title: "من نحن - النمو الماسي",
     description:
-      "شركة Diamond Growth هي شركة مقاولات تأسست في المملكة العربية السعودية عام 2023، متخصصة في الأعمال المدنية، الاتصالات، أنظمة التيار الخفيف، والخدمات الكهروميكانيكية.",
+      "شركة النمو الماسي هي شركة مقاولات تأسست في المملكة العربية السعودية عام 2023، متخصصة في الأعمال المدنية، الاتصالات، أنظمة التيار الخفيف، والخدمات الكهروميكانيكية.",
     url: "https://www.nmudiamond.com/about",
-    siteName: "Diamond Growth",
+    siteName: "النمو الماسي",
     locale: "ar_SA",
     type: "website",
     images: [
       {
         url: "https://www.nmudiamond.com/about-hero.png",
-        alt: "من نحن - Diamond Growth",
+        alt: "من نحن - النمو الماسي",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "من نحن - Diamond Growth",
+    title: "من نحن - النمو الماسي",
     description:
-      "شركة Diamond Growth متخصصة في الأعمال المدنية، الاتصالات، أنظمة التيار الخفيف، والخدمات الكهروميكانيكية.",
+      "شركة النمو الماسي متخصصة في الأعمال المدنية، الاتصالات، أنظمة التيار الخفيف، والخدمات الكهروميكانيكية.",
   },
 }
 
@@ -52,7 +52,7 @@ export default async function AboutPage() {
 
   const bannerImage = settings?.covers?.about || ''
   const bannerTitle = 'من نحن'
-  const bannerSubtitle = settings?.seo?.description || 'شركة Diamond Growth متخصصة في الأعمال المدنية، الاتصالات، أنظمة التيار الخفيف، والخدمات الكهروميكانيكية.'
+  const bannerSubtitle = settings?.seo?.description || 'شركة النمو الماسي متخصصة في الأعمال المدنية، الاتصالات، أنظمة التيار الخفيف، والخدمات الكهروميكانيكية.'
 
   return (
     <main className="min-h-screen">
@@ -77,13 +77,13 @@ export default async function AboutPage() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "AboutPage",
-            name: "من نحن - Diamond Growth",
+            name: "من نحن - النمو الماسي",
             description:
-              "شركة Diamond Growth متخصصة في الأعمال المدنية، الاتصالات، أنظمة التيار الخفيف، والخدمات الكهروميكانيكية.",
+              "شركة النمو الماسي متخصصة في الأعمال المدنية، الاتصالات، أنظمة التيار الخفيف، والخدمات الكهروميكانيكية.",
             url: "https://www.nmudiamond.com/about",
             mainEntity: {
               "@type": "Organization",
-              name: "Diamond Growth",
+              name: "النمو الماسي",
               url: "https://www.nmudiamond.com/",
               telephone: "+966536788004",
               address: {

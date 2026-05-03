@@ -106,7 +106,7 @@ export default function PostForm({ post, isEdit }: PostFormProps) {
 
                 <div className="grid gap-2">
                     <Label htmlFor="author">Author</Label>
-                    <Input id="author" name="author" defaultValue={post?.author || "مؤسسة Diamond Growth"} />
+                    <Input id="author" name="author" defaultValue={post?.author || "مؤسسة النمو الماسي"} />
                 </div>
 
                 <div className="flex items-center gap-2">

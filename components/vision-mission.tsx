@@ -29,7 +29,7 @@ export default async function VisionMission({ settings }: { settings?: any }) {
             <p className="text-lg text-[#2D3640] leading-relaxed">
               {locale === 'en' && settings?.about?.visionEn 
                 ? settings.about.visionEn 
-                : settings?.about?.vision || "تطمح Diamond Growth لأن تكون واحدة من الشركات الرائدة في قطاع المقاولات بالمملكة، عبر تقديم حلول مستدامة ومتطورة تساهم في تحقيق رؤية 2030 ودعم التنمية الشاملة."}
+                : settings?.about?.vision || "تطمح النمو الماسي لأن تكون واحدة من الشركات الرائدة في قطاع المقاولات بالمملكة، عبر تقديم حلول مستدامة ومتطورة تساهم في تحقيق رؤية 2030 ودعم التنمية الشاملة."}
             </p>
           </Card>
 

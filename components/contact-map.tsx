@@ -37,13 +37,13 @@ export default async function ContactMap() {
               allowFullScreen
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
-              title="موقع Diamond Growth"
+              title="موقع النمو الماسي"
             />
           </div>
 
           {/* بطاقة فوق الخريطة */}
           <div className="absolute top-6 right-6 bg-white p-4 rounded-lg shadow-lg max-w-sm">
-            <h3 className="font-bold text-[#0D2240] mb-2">شركة Diamond Growth</h3>
+            <h3 className="font-bold text-[#0D2240] mb-2">شركة النمو الماسي</h3>
             <p className="text-sm text-[#2D3640] mb-3">
               {location.split('،').map((part, index) => (
                 <span key={index}>{part}{index < location.split('،').length - 1 && '،'}<br /></span>

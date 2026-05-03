@@ -24,9 +24,9 @@ export default async function BlogListingPage() {
   const bannerSubtitle = "اكتشف أحدث النصائح والاتجاهات في عالم المقاولات والأنظمة المتكاملة"
 
   // بيانات الصفحة للـ SEO
-  const pageTitle = "مدونة شركة Diamond Growth للمقاولات بالسعودية والأردن"
+  const pageTitle = "مدونة شركة النمو الماسي للمقاولات بالسعودية والأردن"
   const pageDescription =
-    "اقرأ أحدث المقالات والدلائل حول المقاولات العامة وأنظمة الاتصالات والتيار الخفيف بالسعودية والأردن من شركة Diamond Growth."
+    "اقرأ أحدث المقالات والدلائل حول المقاولات العامة وأنظمة الاتصالات والتيار الخفيف بالسعودية والأردن من شركة النمو الماسي."
   const pageUrl = "https://www.nmudiamond.com/blog"
   const pageImage = bannerImage
 
@@ -39,7 +39,7 @@ export default async function BlogListingPage() {
     url: pageUrl,
     publisher: {
       "@type": "Organization",
-      name: "شركة Diamond Growth",
+      name: "شركة النمو الماسي",
       logo: {
         "@type": "ImageObject",
         url: "https://www.nmudiamond.com/logo.png",
@@ -53,7 +53,7 @@ export default async function BlogListingPage() {
         : undefined,
       author: {
         "@type": "Person",
-        name: "شركة Diamond Growth",
+        name: "شركة النمو الماسي",
       },
       datePublished: post.publishedAt || post.createdAt,
       dateModified: post.updatedAt || post.createdAt,

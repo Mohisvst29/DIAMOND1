@@ -4,8 +4,8 @@ const path = require('path');
 function replaceInFile(filePath) {
   let content = fs.readFileSync(filePath, 'utf8');
   let original = content;
-  content = content.replace(/صالح الأزهري/g, "DGR Diamond Growth");
-  content = content.replace(/صالح الازهري/g, "DGR Diamond Growth");
+  content = content.replace(/صالح الأزهري/g, "DGR النمو الماسي");
+  content = content.replace(/صالح الازهري/g, "DGR النمو الماسي");
   content = content.replace(/المدينة المنورة/g, "الرياض");
   content = content.replace(/بالمدينة المنورة/g, "بالرياض");
   

@@ -33,7 +33,7 @@ const blogPosts = [
     slug: "sustainable-construction",
     title: "البناء المستدام: المستقبل الأخضر للمقاولات",
     excerpt: "كيف تساهم تقنيات البناء المستدام في حماية البيئة وتوفير التكاليف على المدى الطويل",
-    author: "Diamond Growth",
+    author: "النمو الماسي",
     publishDate: "2024-01-05",
     readTime: "6 دقائق",
     category: "الاستدامة",

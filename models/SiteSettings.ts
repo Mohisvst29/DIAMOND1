@@ -96,8 +96,8 @@ export interface ISiteSettings extends Document {
 
 const SiteSettingsSchema = new Schema<ISiteSettings>({
   seo: {
-    title: { type: String, default: 'Diamond Growth' },
-    titleEn: { type: String, default: 'Diamond Growth' },
+    title: { type: String, default: 'النمو الماسي' },
+    titleEn: { type: String, default: 'النمو الماسي' },
     description: { type: String, default: '' },
     descriptionEn: { type: String, default: '' },
     keywords: { type: String, default: '' },

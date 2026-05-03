@@ -10,20 +10,20 @@ const mockPosts = [
     slug: "importance-of-civil-works",
     title: "أهمية الأعمال المدنية في المشاريع الكبرى",
     excerpt: "تعرف على الدور الحيوي الذي تلعبه الأعمال المدنية في استقرار ومتانة المشاريع الإنشائية.",
-    content: "<p>الأعمال المدنية هي الأساس الذي تُبنى عليه جميع المشاريع الإنشائية، حيث تلعب دوراً حاسماً في ضمان استقرار المباني وسلامتها عبر الزمن.</p><p>نحن في Diamond Growth نؤمن بأن جودة الأعمال المدنية تعني جودة المشروع بأكمله، لذلك نستخدم أفضل التقنيات والمواد لتحقيق أعلى المعايير الممكنة.</p>",
+    content: "<p>الأعمال المدنية هي الأساس الذي تُبنى عليه جميع المشاريع الإنشائية، حيث تلعب دوراً حاسماً في ضمان استقرار المباني وسلامتها عبر الزمن.</p><p>نحن في النمو الماسي نؤمن بأن جودة الأعمال المدنية تعني جودة المشروع بأكمله، لذلك نستخدم أفضل التقنيات والمواد لتحقيق أعلى المعايير الممكنة.</p>",
     featuredImage: "/service-civil.jpg",
     publishedAt: "2024-01-15T10:00:00Z",
-    author: "شركة Diamond Growth",
+    author: "شركة النمو الماسي",
     tags: ["أعمال مدنية", "إنشاءات", "مقاولات"]
   },
   {
     slug: "future-of-telecom",
     title: "مستقبل شبكات الاتصالات في البنية التحتية",
     excerpt: "كيف تساهم شبكات الألياف الضوئية في تعزيز كفاءة الاتصالات للشركات والمؤسسات.",
-    content: "<p>في ظل التحول الرقمي السريع، أصبحت شبكات الاتصالات من أهم عناصر البنية التحتية للمدن الذكية والمؤسسات الحديثة.</p><p>توفر شبكات الألياف الضوئية سرعات نقل بيانات هائلة، مما يعزز من قدرة المؤسسات على أداء أعمالها بكفاءة وموثوقية عالية، وهذا ما نحرص على تقديمه في Diamond Growth.</p>",
+    content: "<p>في ظل التحول الرقمي السريع، أصبحت شبكات الاتصالات من أهم عناصر البنية التحتية للمدن الذكية والمؤسسات الحديثة.</p><p>توفر شبكات الألياف الضوئية سرعات نقل بيانات هائلة، مما يعزز من قدرة المؤسسات على أداء أعمالها بكفاءة وموثوقية عالية، وهذا ما نحرص على تقديمه في النمو الماسي.</p>",
     featuredImage: "/service-telecom.jpg",
     publishedAt: "2024-02-20T14:30:00Z",
-    author: "شركة Diamond Growth",
+    author: "شركة النمو الماسي",
     tags: ["اتصالات", "ألياف ضوئية", "بنية تحتية"]
   }
 ]
@@ -41,7 +41,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     return { title: "المقال غير موجود" }
   }
 
-  const metaTitle = `${post.title} - مدونة Diamond Growth`
+  const metaTitle = `${post.title} - مدونة النمو الماسي`
   const metaDescription = post.excerpt
 
   return {
@@ -86,10 +86,10 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
     "@type": "BlogPosting",
     headline: title,
     image: image,
-    author: { "@type": "Person", name: "شركة Diamond Growth" },
+    author: { "@type": "Person", name: "شركة النمو الماسي" },
     publisher: {
       "@type": "Organization",
-      name: "شركة Diamond Growth",
+      name: "شركة النمو الماسي",
       logo: { "@type": "ImageObject", url: "https://www.nmudiamond.com/logo.png" },
     },
     datePublished: publishedDate,
@@ -121,7 +121,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
   return (
     <main className="min-h-screen bg-white">
       <Head>
-        <title>{title} - مدونة Diamond Growth</title>
+        <title>{title} - مدونة النمو الماسي</title>
         <meta name="description" content={description} />
         <meta property="og:type" content="article" />
         <meta property="og:title" content={title} />

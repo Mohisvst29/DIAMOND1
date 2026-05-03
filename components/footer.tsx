@@ -87,7 +87,7 @@ export default async function Footer() {
             <div className="mb-6 bg-white p-3 rounded-lg inline-block">
               <img
                 src={logoUrl}
-                alt="Diamond Growth"
+                alt="النمو الماسي"
                 style={{ height: `${logoHeight}px`, width: 'auto' }}
               />
             </div>
@@ -183,7 +183,7 @@ export default async function Footer() {
         {/* Copyright */}
         <div className="border-t border-gray-700 pt-8 text-center">
           <p className="text-gray-300">
-            © 2025 شركة Diamond Growth. جميع الحقوق محفوظة.
+            © 2025 شركة النمو الماسي. جميع الحقوق محفوظة.
           </p>
           <p className="text-gray-300 mt-2">
             تم التصميم بواسطة{" "}

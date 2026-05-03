@@ -39,7 +39,7 @@ export default function AdminDashboard() {
     <div className="space-y-6">
       <div>
         <h2 className="text-2xl font-bold tracking-tight text-slate-800">نظرة عامة</h2>
-        <p className="text-slate-500">مرحباً بك في لوحة تحكم موقع Diamond Growth</p>
+        <p className="text-slate-500">مرحباً بك في لوحة تحكم موقع النمو الماسي</p>
       </div>
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">

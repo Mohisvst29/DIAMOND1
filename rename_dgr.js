@@ -4,7 +4,7 @@ const path = require('path');
 function replaceInFile(filePath) {
   let content = fs.readFileSync(filePath, 'utf8');
   const original = content;
-  content = content.replace(/DGR Diamond Growth/g, "DGR Diamond Growth");
+  content = content.replace(/DGR النمو الماسي/g, "DGR النمو الماسي");
   content = content.replace(/DGR/g, "DGR");
   
   if (content !== original) {

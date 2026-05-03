@@ -54,7 +54,7 @@ export default function ClientHeader({ logoUrl = "/logo.png", logoHeight = "48",
             <Link href="/" className="flex items-center">
               <img
                 src={logoUrl}
-                alt="Diamond Growth"
+                alt="النمو الماسي"
                 style={{ height: `${logoHeight}px`, width: 'auto' }}
               />
             </Link>

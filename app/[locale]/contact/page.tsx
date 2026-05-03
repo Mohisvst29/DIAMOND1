@@ -9,12 +9,12 @@ import connectDB from "@/lib/db"
 import SiteSettings from "@/models/SiteSettings"
 
 export const metadata = {
-  title: "تواصل معنا - Diamond Growth",
+  title: "تواصل معنا - النمو الماسي",
   description:
-    "تواصل مع شركة Diamond Growth للحصول على استشارة وعرض سعر مخصص لمشاريع المقاولات والأنظمة الكهروميكانيكية والاتصالات في السعودية والأردن.",
+    "تواصل مع شركة النمو الماسي للحصول على استشارة وعرض سعر مخصص لمشاريع المقاولات والأنظمة الكهروميكانيكية والاتصالات في السعودية والأردن.",
   keywords: [
     "تواصل معنا",
-    "شركة Diamond Growth",
+    "شركة النمو الماسي",
     "شركة مقاولات بالسعودية والأردن",
     "اتصل بنا مقاولات",
     "طلب عرض سعر",
@@ -24,25 +24,25 @@ export const metadata = {
     "البنية التحتية",
   ],
   openGraph: {
-    title: "تواصل معنا - Diamond Growth",
+    title: "تواصل معنا - النمو الماسي",
     description:
-      "تواصل مع شركة Diamond Growth للحصول على استشارة وعرض سعر مخصص لمشاريع المقاولات والأنظمة الكهروميكانيكية والاتصالات في السعودية والأردن.",
+      "تواصل مع شركة النمو الماسي للحصول على استشارة وعرض سعر مخصص لمشاريع المقاولات والأنظمة الكهروميكانيكية والاتصالات في السعودية والأردن.",
     url: "https://www.nmudiamond.com/contact",
-    siteName: "Diamond Growth",
+    siteName: "النمو الماسي",
     locale: "ar_SA",
     type: "website",
     images: [
       {
         url: "https://www.nmudiamond.com/contact-hero.png",
-        alt: "تواصل معنا - Diamond Growth",
+        alt: "تواصل معنا - النمو الماسي",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "تواصل معنا - Diamond Growth",
+    title: "تواصل معنا - النمو الماسي",
     description:
-      "تواصل مع شركة Diamond Growth للحصول على استشارة وعرض سعر مخصص لمشاريع المقاولات والأنظمة الكهروميكانيكية والاتصالات في السعودية والأردن.",
+      "تواصل مع شركة النمو الماسي للحصول على استشارة وعرض سعر مخصص لمشاريع المقاولات والأنظمة الكهروميكانيكية والاتصالات في السعودية والأردن.",
   },
 }
 
@@ -85,13 +85,13 @@ export default async function ContactPage() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "ContactPage",
-            name: "تواصل معنا - Diamond Growth",
+            name: "تواصل معنا - النمو الماسي",
             description:
-              "تواصل مع شركة Diamond Growth للحصول على استشارة وعرض سعر مخصص لمشاريع المقاولات والأنظمة الكهروميكانيكية والاتصالات في السعودية والأردن.",
+              "تواصل مع شركة النمو الماسي للحصول على استشارة وعرض سعر مخصص لمشاريع المقاولات والأنظمة الكهروميكانيكية والاتصالات في السعودية والأردن.",
             url: "https://www.nmudiamond.com/contact",
             mainEntity: {
               "@type": "Organization",
-              name: "Diamond Growth",
+              name: "النمو الماسي",
               url: "https://www.nmudiamond.com/",
               telephone: phone,
               address: {

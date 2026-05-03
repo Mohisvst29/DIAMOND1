@@ -7,7 +7,7 @@ export default async function CompanyStory({ settings }: { settings?: any }) {
 
   const content = locale === 'en' && settings?.about?.contentEn 
     ? settings.about.contentEn 
-    : settings?.about?.content || `تأسس المقر الرئيسي لشركة Diamond Growth للمقاولات في الأردن عام 2012 (Head office in Jordan, since 2012)، وانطلقت لاحقاً في عام 2023 لافتتاح فرعها في المملكة العربية السعودية.
+    : settings?.about?.content || `تأسس المقر الرئيسي لشركة النمو الماسي للمقاولات في الأردن عام 2012 (Head office in Jordan, since 2012)، وانطلقت لاحقاً في عام 2023 لافتتاح فرعها في المملكة العربية السعودية.
 
 نحن متخصصون في الأعمال المدنية، الاتصالات، أنظمة التيار الخفيف، والخدمات الكهروميكانيكية، ونسعى دائمًا لتلبية احتياجات عملائنا بأفضل الممارسات.
 
