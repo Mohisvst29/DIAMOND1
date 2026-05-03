@@ -160,9 +160,11 @@ export default function SettingsPage() {
                       <CldUploadWidget 
                       signatureEndpoint="/api/cloudinary/sign"
                         onSuccess={(result: any) => {
-                          const newHero = [...settings.hero];
-                          newHero[index].image = result.info.secure_url;
-                          setSettings({...settings, hero: newHero});
+                          setSettings((prev: any) => {
+                            const newHero = [...(prev.hero || [])];
+                            newHero[index] = { ...newHero[index], image: result.info.secure_url };
+                            return { ...prev, hero: newHero };
+                          });
                         }}
                       >
                         {({ open }) => (
@@ -206,7 +208,7 @@ export default function SettingsPage() {
                     {settings.covers?.[cover.id] && <img src={settings.covers[cover.id]} alt="Cover" className="h-16 w-32 object-cover rounded" />}
                     <CldUploadWidget 
                       signatureEndpoint="/api/cloudinary/sign"
-                      onSuccess={(result: any) => setSettings({...settings, covers: {...settings.covers, [cover.id]: result.info.secure_url}})}
+                      onSuccess={(result: any) => setSettings((prev: any) => ({...prev, covers: {...prev.covers, [cover.id]: result.info.secure_url}}))}
                     >
                       {({ open }) => (
                         <Button type="button" variant="outline" onClick={() => open()}>رفع غلاف</Button>
@@ -283,7 +285,7 @@ export default function SettingsPage() {
                   ))}
                   <CldUploadWidget 
                     signatureEndpoint="/api/cloudinary/sign"
-                    onSuccess={(result: any) => setSettings({...settings, about: {...settings.about, images: [...(settings.about?.images || []), result.info.secure_url]}})}
+                    onSuccess={(result: any) => setSettings((prev: any) => ({...prev, about: {...prev.about, images: [...(prev.about?.images || []), result.info.secure_url]}}))}
                   >
                     {({ open }) => (
                       <button type="button" onClick={() => open()} className="h-24 w-24 border-2 border-dashed rounded flex items-center justify-center text-slate-400 hover:text-slate-600 hover:bg-slate-50 transition">
@@ -365,7 +367,7 @@ export default function SettingsPage() {
                 ))}
                 <CldUploadWidget 
                   signatureEndpoint="/api/cloudinary/sign"
-                  onSuccess={(result: any) => setSettings({...settings, partners: [...(settings.partners || []), result.info.secure_url]})}
+                  onSuccess={(result: any) => setSettings((prev: any) => ({...prev, partners: [...(prev.partners || []), result.info.secure_url]}))}
                 >
                   {({ open }) => (
                     <button type="button" onClick={() => open()} className="w-32 h-32 border-2 border-dashed rounded flex flex-col items-center justify-center text-slate-400 hover:text-slate-600 hover:bg-slate-50 transition">
@@ -478,9 +480,11 @@ export default function SettingsPage() {
                       <CldUploadWidget 
                         signatureEndpoint="/api/cloudinary/sign"
                         onSuccess={(result: any) => {
-                          const newTeam = [...settings.team];
-                          newTeam[index].image = result.info.secure_url;
-                          setSettings({...settings, team: newTeam});
+                          setSettings((prev: any) => {
+                            const newTeam = [...(prev.team || [])];
+                            newTeam[index] = { ...newTeam[index], image: result.info.secure_url };
+                            return { ...prev, team: newTeam };
+                          });
                         }}
                       >
                         {({ open }) => (
@@ -519,7 +523,7 @@ export default function SettingsPage() {
                 <CldUploadWidget 
                   signatureEndpoint="/api/cloudinary/sign"
                   onSuccess={(result: any) => {
-                    setSettings({...settings, logo: {...settings.logo, url: result.info.secure_url}})
+                    setSettings((prev: any) => ({...prev, logo: {...prev.logo, url: result.info.secure_url}}))
                   }}
                 >
                   {({ open }) => (
