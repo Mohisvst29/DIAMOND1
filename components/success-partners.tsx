@@ -2,8 +2,10 @@
 
 import { useEffect, useState } from "react"
 import Image from "next/image"
+import { useTranslations } from "next-intl"
 
 export default function SuccessPartners({ settings }: { settings?: any }) {
+  const t = useTranslations("Partners")
   const partners = settings?.partners || []
 
   if (partners.length === 0) return null
@@ -11,9 +13,9 @@ export default function SuccessPartners({ settings }: { settings?: any }) {
   return (
     <section className="py-16 bg-white overflow-hidden border-t border-gray-100">
       <div className="container mx-auto px-4 mb-10 text-center">
-        <h2 className="text-3xl md:text-4xl font-bold text-[#0D2240] mb-4">شركاء النجاح</h2>
+        <h2 className="text-3xl md:text-4xl font-bold text-[#0D2240] mb-4">{t("title")}</h2>
         <div className="w-24 h-1 bg-[#C4D600] mx-auto rounded-full mb-4"></div>
-        <p className="text-lg text-gray-600">نعتز بثقة شركائنا وعملائنا في المملكة العربية السعودية والأردن</p>
+        <p className="text-lg text-gray-600">{t("subtitle")}</p>
       </div>
 
       <div className="relative flex overflow-x-hidden group">

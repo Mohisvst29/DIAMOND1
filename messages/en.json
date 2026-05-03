@@ -98,5 +98,48 @@
     "projectDetails": "Project Details",
     "projectDetailsPlaceholder": "Tell us about your project in Saudi Arabia and Jordan, the area, location, and specific requirements...",
     "submitButton": "Send Message"
+  },
+  "Footer": {
+    "aboutCompany": "A contracting company specialized in civil works, telecommunications, low current systems, and electromechanical services.\n\nHead office in Jordan, since 2012\nSaudi Arabia branch, since 2023",
+    "quickLinks": "Quick Links",
+    "ourServices": "Our Services",
+    "contactInfo": "Contact Information",
+    "followUs": "Follow Us on Social Media",
+    "copyright": "© 2025 Diamond Growth Company. All rights reserved.",
+    "designedBy": "Designed by",
+    "rawadDigital": "Rawad Digital"
+  },
+  "Partners": {
+    "title": "Success Partners",
+    "subtitle": "We are proud of the trust of our partners and clients in Saudi Arabia and Jordan"
+  },
+  "Locations": {
+    "title": "Our Locations",
+    "subtitle": "Welcome to visit us at our company headquarters"
+  },
+  "Achievements": {
+    "title": "Our Achievements",
+    "titleWithLocation": "Our Achievements in Saudi Arabia and Jordan",
+    "subtitle": "Numbers that reflect our experience and excellence in providing integrated project solutions"
+  },
+  "ProjectsStats": {
+    "title": "Our Achievements in Saudi Arabia and Jordan",
+    "subtitle": "Numbers that reflect our successful journey and the trust of our clients in Saudi Arabia and Jordan",
+    "completedProjects": "Completed Projects",
+    "completedProjectsDesc": "Diverse projects in Saudi Arabia and Jordan",
+    "yearsExperience": "Years of Experience",
+    "yearsExperienceDesc": "Deep-rooted experience in projects across Saudi Arabia and Jordan",
+    "satisfiedClients": "Satisfied Clients",
+    "satisfiedClientsDesc": "Clients who trust the quality of our services in Saudi Arabia and Jordan",
+    "ongoingProjects": "Ongoing Projects",
+    "ongoingProjectsDesc": "Projects currently underway in Saudi Arabia and Jordan"
+  },
+  "ServicesSection": {
+    "title": "Our Services",
+    "subtitle": "We offer a comprehensive range of advanced services with the highest quality standards",
+    "serviceDetails": "Service Details",
+    "showLess": "Show Less",
+    "showMore": "Show More",
+    "viewAllServices": "View All Services"
   }
 }

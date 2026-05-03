@@ -2,35 +2,38 @@
 
 import { useEffect, useState } from "react"
 import { Card } from "@/components/ui/card"
-
-const stats = [
-  {
-    number: 250,
-    label: "مشروع مكتمل",
-    description: "مشاريع متنوعة بالسعودية والأردن",
-    suffix: "+",
-  },
-  {
-    number: 15,
-    label: "سنة خبرة",
-    description: "خبرة عريقة في مشاريع السعودية والأردن",
-    suffix: "+",
-  },
-  {
-    number: 150,
-    label: "عميل راضي",
-    description: "عملاء يثقون في جودة خدماتنا بالسعودية والأردن",
-    suffix: "+",
-  },
-  {
-    number: 50,
-    label: "مشروع جاري",
-    description: "مشاريع قيد التنفيذ حالياً بالسعودية والأردن",
-    suffix: "+",
-  },
-]
+import { useTranslations } from "next-intl"
 
 export default function ProjectsStats() {
+  const t = useTranslations("ProjectsStats")
+
+  const stats = [
+    {
+      number: 250,
+      label: t("completedProjects"),
+      description: t("completedProjectsDesc"),
+      suffix: "+",
+    },
+    {
+      number: 15,
+      label: t("yearsExperience"),
+      description: t("yearsExperienceDesc"),
+      suffix: "+",
+    },
+    {
+      number: 150,
+      label: t("satisfiedClients"),
+      description: t("satisfiedClientsDesc"),
+      suffix: "+",
+    },
+    {
+      number: 50,
+      label: t("ongoingProjects"),
+      description: t("ongoingProjectsDesc"),
+      suffix: "+",
+    },
+  ]
+
   const [counts, setCounts] = useState(stats.map(() => 0))
   const [isVisible, setIsVisible] = useState(false)
 
@@ -85,8 +88,8 @@ export default function ProjectsStats() {
     <section id="projects-stats" className="py-20 bg-gray-50">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-[#0D2240] mb-4">إنجازاتنا بالسعودية والأردن</h2>
-          <p className="text-lg text-[#2D3640] max-w-2xl mx-auto">أرقام تعكس مسيرتنا الناجحة وثقة عملائنا في مشاريع السعودية والأردن</p>
+          <h2 className="text-3xl md:text-4xl font-bold text-[#0D2240] mb-4">{t("title")}</h2>
+          <p className="text-lg text-[#2D3640] max-w-2xl mx-auto">{t("subtitle")}</p>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">

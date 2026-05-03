@@ -5,6 +5,7 @@ import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Link } from "@/navigation"
 import { Palette, Building, Wrench, Zap, Hammer, Bold as Road, RefreshCw, Plus, Minus, Settings } from "lucide-react"
+import { useTranslations, useLocale } from "next-intl"
 
 // Map icon names to components (reusing logic or centralized map would be better)
 const IconMap: { [key: string]: any } = {
@@ -21,8 +22,11 @@ const IconMap: { [key: string]: any } = {
 interface Service {
   _id: string
   title: string
+  titleEn?: string
   description: string
+  descriptionEn?: string
   details?: string
+  detailsEn?: string
   href?: string
   icon: string
   // other props
@@ -33,6 +37,8 @@ interface ServicesSectionProps {
 }
 
 export default function ServicesSection({ services }: ServicesSectionProps) {
+  const t = useTranslations("ServicesSection")
+  const locale = useLocale()
   const [expandedCard, setExpandedCard] = useState<number | null>(null)
   const [isVisible, setIsVisible] = useState(false)
   const sectionRef = useRef<HTMLElement>(null)
@@ -72,9 +78,9 @@ export default function ServicesSection({ services }: ServicesSectionProps) {
           className={`text-center mb-16 transition-all duration-800 delay-200 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-[-30px]"
             }`}
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-[#0D2240] mb-4">خدماتنا</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-[#0D2240] mb-4">{t("title")}</h2>
           <p className="text-lg text-[#2D3640] max-w-2xl mx-auto">
-            نقدم مجموعة شاملة من الخدمات المتقدمة بأعلى معايير الجودة
+            {t("subtitle")}
           </p>
         </div>
 
@@ -105,18 +111,20 @@ export default function ServicesSection({ services }: ServicesSectionProps) {
                 </div>
 
                 <h3 className="text-xl font-bold text-[#0D2240] mb-3 group-hover:text-[#C4D600] transition-colors duration-300">
-                  {service.title}
+                  {locale === 'en' && service.titleEn ? service.titleEn : service.title}
                 </h3>
 
                 <p className="text-[#2D3640] mb-4 group-hover:text-[#0D2240] transition-colors duration-300">
-                  {service.description}
+                  {locale === 'en' && service.descriptionEn ? service.descriptionEn : service.description}
                 </p>
 
                 <div
                   className={`overflow-hidden transition-all duration-500 ${expandedCard === index ? "max-h-32 opacity-100 mb-4" : "max-h-0 opacity-0"
                     }`}
                 >
-                  <p className="text-sm text-[#2D3640] leading-relaxed border-t pt-3">{service.details || service.description}</p>
+                  <p className="text-sm text-[#2D3640] leading-relaxed border-t pt-3">
+                    {locale === 'en' && service.detailsEn ? service.detailsEn : (service.details || service.description)}
+                  </p>
                 </div>
 
                 <div className="flex flex-col gap-2">
@@ -126,7 +134,7 @@ export default function ServicesSection({ services }: ServicesSectionProps) {
                       className="w-full border-[#C4D600] text-[#C4D600] hover:bg-[#C4D600] hover:text-[#0D2240] bg-transparent transition-all duration-300"
                       onClick={(e) => e.stopPropagation()}
                     >
-                      تفاصيل الخدمة
+                      {t("serviceDetails")}
                     </Button>
                   </Link>
 
@@ -138,12 +146,12 @@ export default function ServicesSection({ services }: ServicesSectionProps) {
                     {expandedCard === index ? (
                       <>
                         <Minus className="w-4 h-4 ml-1 transition-transform duration-300" />
-                        عرض أقل
+                        {t("showLess")}
                       </>
                     ) : (
                       <>
                         <Plus className="w-4 h-4 ml-1 transition-transform duration-300" />
-                        عرض المزيد
+                        {t("showMore")}
                       </>
                     )}
                   </Button>
@@ -162,7 +170,7 @@ export default function ServicesSection({ services }: ServicesSectionProps) {
               size="lg"
               className="bg-[#0D2240] hover:bg-[#1a3a5c] text-white font-bold hover:scale-105 transition-all duration-300"
             >
-              عرض جميع الخدمات
+              {t("viewAllServices")}
             </Button>
           </Link>
         </div>

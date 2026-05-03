@@ -41,8 +41,13 @@ const TikTokIcon = () => (
 
 import connectDB from "@/lib/db";
 import SiteSettings from "@/models/SiteSettings";
+import { getTranslations, getLocale } from "next-intl/server";
 
 export default async function Footer() {
+  const t = await getTranslations("Footer");
+  const tNav = await getTranslations("Navigation");
+  const tContact = await getTranslations("Contact");
+  const locale = await getLocale();
   let logoUrl = "/logo.png"
   let logoHeight = "48" // default px
   
@@ -91,48 +96,44 @@ export default async function Footer() {
                 style={{ height: `${logoHeight}px`, width: 'auto' }}
               />
             </div>
-            <p className="text-gray-300 leading-relaxed">
-              شركة مقاولات متخصصة في الأعمال المدنية، الاتصالات، أنظمة التيار الخفيف، والخدمات الكهروميكانيكية.
-              <br/><br/>
-              المقر الرئيسي في الأردن، منذ عام 2012<br/>
-              Head office in Jordan, since 2012<br/>
-              فرع المملكة العربية السعودية، منذ عام 2023
+            <p className="text-gray-300 leading-relaxed whitespace-pre-line">
+              {t("aboutCompany")}
             </p>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h4 className="text-lg font-bold mb-6">روابط سريعة</h4>
+            <h4 className="text-lg font-bold mb-6">{t("quickLinks")}</h4>
             <ul className="space-y-3">
-              <li><Link href="/" className="text-gray-300 hover:text-[#C4D600] transition-colors">الرئيسية</Link></li>
-              <li><Link href="/about" className="text-gray-300 hover:text-[#C4D600] transition-colors">من نحن</Link></li>
-              <li><Link href="/services" className="text-gray-300 hover:text-[#C4D600] transition-colors">الخدمات</Link></li>
-              <li><Link href="/projects" className="text-gray-300 hover:text-[#C4D600] transition-colors">معرض الاعمال</Link></li>
-              <li><Link href="/blog" className="text-gray-300 hover:text-[#C4D600] transition-colors">المدونة</Link></li>
-              <li><Link href="/contact" className="text-gray-300 hover:text-[#C4D600] transition-colors">تواصل معنا</Link></li>
+              <li><Link href="/" className="text-gray-300 hover:text-[#C4D600] transition-colors">{tNav("home")}</Link></li>
+              <li><Link href="/about" className="text-gray-300 hover:text-[#C4D600] transition-colors">{tNav("about")}</Link></li>
+              <li><Link href="/services" className="text-gray-300 hover:text-[#C4D600] transition-colors">{tNav("services")}</Link></li>
+              <li><Link href="/projects" className="text-gray-300 hover:text-[#C4D600] transition-colors">{tNav("portfolio")}</Link></li>
+              <li><Link href="/blog" className="text-gray-300 hover:text-[#C4D600] transition-colors">{tNav("blog")}</Link></li>
+              <li><Link href="/contact" className="text-gray-300 hover:text-[#C4D600] transition-colors">{tNav("contact")}</Link></li>
             </ul>
           </div>
 
           {/* Services */}
           <div>
-            <h4 className="text-lg font-bold mb-6">خدماتنا</h4>
+            <h4 className="text-lg font-bold mb-6">{t("ourServices")}</h4>
             <ul className="space-y-3 text-gray-300">
-              <li><Link href="/services/civil-mep" className="hover:text-[#C4D600] transition-colors">الأعمال المدنية والكهروميكانيكية</Link></li>
-              <li><Link href="/services/low-current" className="hover:text-[#C4D600] transition-colors">أنظمة التيار الخفيف</Link></li>
-              <li><Link href="/services/infrastructure" className="hover:text-[#C4D600] transition-colors">البنية التحتية والاتصالات</Link></li>
+              <li><Link href="/services/civil-mep" className="hover:text-[#C4D600] transition-colors">{tContact("service1")}</Link></li>
+              <li><Link href="/services/low-current" className="hover:text-[#C4D600] transition-colors">{tContact("service2")}</Link></li>
+              <li><Link href="/services/infrastructure" className="hover:text-[#C4D600] transition-colors">{tContact("service3")}</Link></li>
             </ul>
           </div>
 
           {/* Contact Info */}
           <div>
-            <h4 className="text-lg font-bold mb-6">معلومات التواصل</h4>
+            <h4 className="text-lg font-bold mb-6">{t("contactInfo")}</h4>
             <div className="space-y-4">
               <div className="flex items-center">
-                <Mail className="w-5 h-5 text-[#C4D600] ml-3" />
+                <Mail className={`w-5 h-5 text-[#C4D600] ${locale === 'en' ? 'mr-3' : 'ml-3'}`} />
                 <span className="text-gray-300">{contactEmail}</span>
               </div>
               <div className="flex items-start">
-                <MapPin className="w-5 h-5 text-[#C4D600] ml-3 mt-1" />
+                <MapPin className={`w-5 h-5 text-[#C4D600] mt-1 ${locale === 'en' ? 'mr-3' : 'ml-3'}`} />
                 <span className="text-gray-300">
                   {contactLocation.split('،').map((part, index) => (
                     <span key={index}>{part}{index < contactLocation.split('،').length - 1 && '،'}<br /></span>
@@ -143,7 +144,7 @@ export default async function Footer() {
 
             {/* Social Media */}
             <div className="mt-8">
-              <h5 className="text-lg font-bold mb-4">تابعنا على وسائل التواصل</h5>
+              <h5 className="text-lg font-bold mb-4">{t("followUs")}</h5>
               <div className="flex gap-3 flex-wrap">
                 {socialFacebook && (
                   <Button asChild size="sm" variant="outline" className="border-white/30 text-white hover:bg-[#C4D600] hover:text-[#0D2240] hover:border-[#C4D600] bg-transparent p-3">
@@ -183,17 +184,17 @@ export default async function Footer() {
         {/* Copyright */}
         <div className="border-t border-gray-700 pt-8 text-center">
           <p className="text-gray-300">
-            © 2025 شركة النمو الماسي. جميع الحقوق محفوظة.
+            {t("copyright")}
           </p>
           <p className="text-gray-300 mt-2">
-            تم التصميم بواسطة{" "}
+            {t("designedBy")}{" "}
             <a
               href="https://wa.me/966541430116"
               target="_blank"
               rel="noopener noreferrer"
               className="text-blue-400 hover:text-blue-500 transition"
             >
-              رواد الرقمية
+              {t("rawadDigital")}
             </a>
           </p>
         </div>

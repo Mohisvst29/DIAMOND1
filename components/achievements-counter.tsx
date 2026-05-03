@@ -2,13 +2,16 @@
 
 import { useEffect, useState } from "react"
 import { Card } from "@/components/ui/card"
+import { useTranslations } from "next-intl"
 
 export default function AchievementsCounter({ settings }: { settings?: any }) {
+  const t = useTranslations("Achievements")
+  const tAbout = useTranslations("About")
   const achievements = [
-    { number: settings?.achievements?.projectsCompleted || 110, label: "مشروع مكتمل", suffix: "+" },
-    { number: settings?.achievements?.satisfiedClients || 100, label: "عميل راضٍ", suffix: "+" },
-    { number: settings?.achievements?.yearsExperience || 15, label: "سنوات الخبرة", suffix: "+" },
-    { number: settings?.achievements?.experts || 45, label: "خبير ومهندس", suffix: "+" },
+    { number: settings?.achievements?.projectsCompleted || 110, label: tAbout("completedProjects"), suffix: "+" },
+    { number: settings?.achievements?.satisfiedClients || 100, label: tAbout("satisfiedClients"), suffix: "+" },
+    { number: settings?.achievements?.yearsExperience || 15, label: tAbout("yearsExperience"), suffix: "+" },
+    { number: settings?.achievements?.experts || 45, label: tAbout("experts"), suffix: "+" },
   ]
   const [counts, setCounts] = useState(achievements.map(() => 0))
   const [isVisible, setIsVisible] = useState(false)
@@ -65,9 +68,9 @@ export default function AchievementsCounter({ settings }: { settings?: any }) {
     <section id="achievements-counter" className="py-20 bg-[#0D2240]">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">إنجازاتنا</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">{t("title")}</h2>
           <p className="text-lg text-gray-300 max-w-2xl mx-auto">
-            أرقام تعبر عن خبرتنا وتميزنا في تقديم الحلول المتكاملة للمشاريع
+            {t("subtitle")}
           </p>
         </div>
 

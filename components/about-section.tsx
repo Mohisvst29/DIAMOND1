@@ -48,9 +48,9 @@ export default function AboutSection({ settings }: { settings?: any }) {
           >
             <h2 className="text-3xl md:text-4xl font-bold text-[#0D2240] mb-6">{tAbout("title")}</h2>
             <p className="text-lg text-[#2D3640] leading-relaxed mb-6 whitespace-pre-line">
-              {locale === 'en' && settings?.home?.aboutSummaryEn 
-                ? settings.home.aboutSummaryEn 
-                : settings?.home?.aboutSummary || "شركة النمو الماسي هي شركة مقاولات متخصصة في الأعمال المدنية، الاتصالات، أنظمة التيار الخفيف، والخدمات الكهروميكانيكية.\n\nالمقر الرئيسي في الأردن، منذ عام 2012\nHead office in Jordan, since 2012"}
+              {locale === 'en' 
+                ? (settings?.home?.aboutSummaryEn || "Diamond Growth is a contracting company specialized in civil works, telecommunications, low current systems, and electromechanical services.\n\nHead office in Jordan, since 2012\nSaudi Arabia branch, since 2023")
+                : (settings?.home?.aboutSummary || "شركة النمو الماسي هي شركة مقاولات متخصصة في الأعمال المدنية، الاتصالات، أنظمة التيار الخفيف، والخدمات الكهروميكانيكية.\n\nالمقر الرئيسي في الأردن، منذ عام 2012\nفرع المملكة العربية السعودية، منذ عام 2023")}
             </p>
 
             <div
@@ -59,9 +59,9 @@ export default function AboutSection({ settings }: { settings?: any }) {
               }`}
             >
               <p className="text-lg text-[#2D3640] leading-relaxed mb-4 whitespace-pre-line">
-                {locale === 'en' && settings?.about?.contentEn 
-                  ? settings.about.contentEn 
-                  : settings?.about?.content || "نقدم حلول متكاملة تشمل التوريد، دراسات الجدوى، التصميم، الهندسة، إدارة المشاريع، التنفيذ، وتسليم المشاريع الجاهزة."}
+                {locale === 'en' 
+                  ? (settings?.about?.contentEn || "We provide integrated solutions including supply, feasibility studies, design, engineering, project management, execution, and turnkey project delivery.")
+                  : (settings?.about?.content || "نقدم حلول متكاملة تشمل التوريد، دراسات الجدوى، التصميم، الهندسة، إدارة المشاريع، التنفيذ، وتسليم المشاريع الجاهزة.")}
               </p>
             </div>
 
