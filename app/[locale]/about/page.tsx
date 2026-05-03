@@ -26,13 +26,13 @@ export const metadata = {
     title: "من نحن - النمو الماسي",
     description:
       "شركة النمو الماسي هي شركة مقاولات تأسست في المملكة العربية السعودية عام 2023، متخصصة في الأعمال المدنية، الاتصالات، أنظمة التيار الخفيف، والخدمات الكهروميكانيكية.",
-    url: "https://www.nmudiamond.com/about",
+    url: "https://www.dgrcon.com/about",
     siteName: "النمو الماسي",
     locale: "ar_SA",
     type: "website",
     images: [
       {
-        url: "https://www.nmudiamond.com/about-hero.png",
+        url: "https://www.dgrcon.com/about-hero.png",
         alt: "من نحن - النمو الماسي",
       },
     ],
@@ -80,11 +80,11 @@ export default async function AboutPage() {
             name: "من نحن - النمو الماسي",
             description:
               "شركة النمو الماسي متخصصة في الأعمال المدنية، الاتصالات، أنظمة التيار الخفيف، والخدمات الكهروميكانيكية.",
-            url: "https://www.nmudiamond.com/about",
+            url: "https://www.dgrcon.com/about",
             mainEntity: {
               "@type": "Organization",
               name: "النمو الماسي",
-              url: "https://www.nmudiamond.com/",
+              url: "https://www.dgrcon.com/",
               telephone: "+966536788004",
               address: {
                 "@type": "PostalAddress",

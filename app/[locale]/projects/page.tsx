@@ -36,7 +36,7 @@ export default async function ProjectsPage() {
     "@type": "CollectionPage",
     name: pageTitle,
     description: pageDescription,
-    url: "https://www.nmudiamond.com/projects",
+    url: "https://www.dgrcon.com/projects",
     hasPart: projects.map((p: any) => ({
       "@type": "CreativeWork",
       name: p.title,

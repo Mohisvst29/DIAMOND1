@@ -25,7 +25,7 @@ export const metadata = {
     title: "خدماتنا - النمو الماسي",
     description:
       "شركة النمو الماسي تقدم خدمات المقاولات، الأعمال المدنية، الاتصالات، أنظمة التيار الخفيف، والخدمات الكهروميكانيكية بأعلى جودة في السعودية والأردن والمملكة.",
-    url: "https://www.nmudiamond.com/services",
+    url: "https://www.dgrcon.com/services",
     siteName: "النمو الماسي",
     locale: "ar_SA",
     type: "website",
@@ -75,7 +75,7 @@ export default async function ServicesPage() {
             "@type": "LocalBusiness",
             "name": "النمو الماسي",
             "description": "شركة متخصصة في الأعمال المدنية والاتصالات وأنظمة التيار الخفيف والكهروميكانيكا.",
-            "url": "https://www.nmudiamond.com/",
+            "url": "https://www.dgrcon.com/",
             "telephone": "+966536788004",
             "address": {
               "@type": "PostalAddress",
@@ -90,7 +90,7 @@ export default async function ServicesPage() {
             },
             "openingHours": "Su,Mo,Tu,We,Th 08:00-17:00",
             "sameAs": [
-              "https://www.nmudiamond.com/"
+              "https://www.dgrcon.com/"
             ]
           }),
         }}

@@ -28,7 +28,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     ],
     secret: "super-secret-key-12345", // Hardcoded secret to fix error
     pages: {
-        signIn: "/login",
+        signIn: "/admin/login",
     },
     callbacks: {
         jwt({ token, user }) {

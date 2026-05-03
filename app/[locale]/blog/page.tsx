@@ -27,7 +27,7 @@ export default async function BlogListingPage() {
   const pageTitle = "مدونة شركة النمو الماسي للمقاولات بالسعودية والأردن"
   const pageDescription =
     "اقرأ أحدث المقالات والدلائل حول المقاولات العامة وأنظمة الاتصالات والتيار الخفيف بالسعودية والأردن من شركة النمو الماسي."
-  const pageUrl = "https://www.nmudiamond.com/blog"
+  const pageUrl = "https://www.dgrcon.com/blog"
   const pageImage = bannerImage
 
   // Structured Data لكل المقالات
@@ -42,14 +42,14 @@ export default async function BlogListingPage() {
       name: "شركة النمو الماسي",
       logo: {
         "@type": "ImageObject",
-        url: "https://www.nmudiamond.com/logo.png",
+        url: "https://www.dgrcon.com/logo.png",
       },
     },
     blogPost: posts.map((post) => ({
       "@type": "BlogPosting",
       headline: post.title,
       image: post.featuredImage
-        ? `https://www.nmudiamond.com${post.featuredImage}`
+        ? `https://www.dgrcon.com${post.featuredImage}`
         : undefined,
       author: {
         "@type": "Person",
@@ -57,7 +57,7 @@ export default async function BlogListingPage() {
       },
       datePublished: post.publishedAt || post.createdAt,
       dateModified: post.updatedAt || post.createdAt,
-      url: `https://www.nmudiamond.com/blog/${post.slug}`,
+      url: `https://www.dgrcon.com/blog/${post.slug}`,
       description: post.excerpt,
     })),
   }

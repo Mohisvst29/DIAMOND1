@@ -51,10 +51,10 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     openGraph: {
       title: metaTitle,
       description: metaDescription,
-      url: `https://www.nmudiamond.com/blog/${post.slug}`,
+      url: `https://www.dgrcon.com/blog/${post.slug}`,
       images: post.featuredImage
-        ? [`https://www.nmudiamond.com${post.featuredImage}`]
-        : [`https://www.nmudiamond.com/aaa.png`],
+        ? [`https://www.dgrcon.com${post.featuredImage}`]
+        : [`https://www.dgrcon.com/aaa.png`],
       type: "article",
     },
     twitter: {
@@ -62,8 +62,8 @@ export async function generateMetadata({ params }: { params: { slug: string } })
       title: metaTitle,
       description: metaDescription,
       images: post.featuredImage
-        ? [`https://www.nmudiamond.com${post.featuredImage}`]
-        : [`https://www.nmudiamond.com/aaa.png`],
+        ? [`https://www.dgrcon.com${post.featuredImage}`]
+        : [`https://www.dgrcon.com/aaa.png`],
     },
   }
 }
@@ -75,10 +75,10 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
 
   const title = post.title
   const description = post.excerpt
-  const url = `https://www.nmudiamond.com/blog/${post.slug}`
+  const url = `https://www.dgrcon.com/blog/${post.slug}`
   const image = post.featuredImage
-    ? `https://www.nmudiamond.com${post.featuredImage}`
-    : "https://www.nmudiamond.com/aaa.png"
+    ? `https://www.dgrcon.com${post.featuredImage}`
+    : "https://www.dgrcon.com/aaa.png"
   const publishedDate = post.publishedAt.split("T")[0]
 
   const schema = {
@@ -90,7 +90,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
     publisher: {
       "@type": "Organization",
       name: "شركة النمو الماسي",
-      logo: { "@type": "ImageObject", url: "https://www.nmudiamond.com/logo.png" },
+      logo: { "@type": "ImageObject", url: "https://www.dgrcon.com/logo.png" },
     },
     datePublished: publishedDate,
     dateModified: publishedDate,

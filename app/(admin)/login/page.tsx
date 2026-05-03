@@ -9,25 +9,36 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Loader2, Lock, Mail } from "lucide-react"
 import { useState, Suspense } from "react"
 import { toast } from "sonner"
-import { authenticate } from "@/actions/auth-actions"
+import { signIn } from "next-auth/react"
 
 function LoginForm() {
     const searchParams = useSearchParams()
     const callbackUrl = searchParams.get("callbackUrl") || "/admin"
     const [isLoading, setIsLoading] = useState(false)
 
-    async function handleSubmit(formData: FormData) {
-        setIsLoading(true)
+    async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+        event.preventDefault();
+        setIsLoading(true);
+        const formData = new FormData(event.currentTarget);
+        const email = formData.get('email') as string;
+        const password = formData.get('password') as string;
         try {
-            // Using the server action to handle sign in
-            const result = await authenticate(formData)
+            const result = await signIn('credentials', {
+                email,
+                password,
+                redirect: false,
+                callbackUrl: callbackUrl,
+            });
             if (result?.error) {
-                toast.error("بيانات الدخول غير صحيحة")
+                toast.error('بيانات الدخول غير صحيحة');
+            } else if (result?.url) {
+                // Redirect to the destination URL
+                window.location.href = result.url;
             }
         } catch (error) {
-            toast.error("حدث خطأ أثناء تسجيل الدخول")
+            toast.error('حدث خطأ أثناء تسجيل الدخول');
         } finally {
-            setIsLoading(false)
+            setIsLoading(false);
         }
     }
 
@@ -43,8 +54,7 @@ function LoginForm() {
                 </CardDescription>
             </CardHeader>
             <CardContent className="pt-8">
-                <form action={handleSubmit} className="space-y-6">
-                    <input type="hidden" name="redirectTo" value={callbackUrl} />
+                <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="space-y-2">
                         <Label htmlFor="email" className="text-[#0D2240] font-medium">البريد الإلكتروني</Label>
                         <div className="relative">

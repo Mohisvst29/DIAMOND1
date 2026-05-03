@@ -43,7 +43,7 @@ const TikTokIcon = () => (
 )
 
 export default function ClientContactInfo({
-  email = "info@nmudiamond.com",
+  email = "info@dgrcon.com",
   phone = "+966536788004",
   location = "طريق الملك عبدالعزيز، السعودية والأردن",
   facebook = "",

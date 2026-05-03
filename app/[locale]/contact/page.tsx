@@ -27,13 +27,13 @@ export const metadata = {
     title: "تواصل معنا - النمو الماسي",
     description:
       "تواصل مع شركة النمو الماسي للحصول على استشارة وعرض سعر مخصص لمشاريع المقاولات والأنظمة الكهروميكانيكية والاتصالات في السعودية والأردن.",
-    url: "https://www.nmudiamond.com/contact",
+    url: "https://www.dgrcon.com/contact",
     siteName: "النمو الماسي",
     locale: "ar_SA",
     type: "website",
     images: [
       {
-        url: "https://www.nmudiamond.com/contact-hero.png",
+        url: "https://www.dgrcon.com/contact-hero.png",
         alt: "تواصل معنا - النمو الماسي",
       },
     ],
@@ -88,11 +88,11 @@ export default async function ContactPage() {
             name: "تواصل معنا - النمو الماسي",
             description:
               "تواصل مع شركة النمو الماسي للحصول على استشارة وعرض سعر مخصص لمشاريع المقاولات والأنظمة الكهروميكانيكية والاتصالات في السعودية والأردن.",
-            url: "https://www.nmudiamond.com/contact",
+            url: "https://www.dgrcon.com/contact",
             mainEntity: {
               "@type": "Organization",
               name: "النمو الماسي",
-              url: "https://www.nmudiamond.com/",
+              url: "https://www.dgrcon.com/",
               telephone: phone,
               address: {
                 "@type": "PostalAddress",
