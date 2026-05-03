@@ -3,10 +3,10 @@
 import { useState, useEffect, useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
-import Link from "next/link"
+import { Link } from "@/navigation"
 import { ChevronDown, ChevronUp } from "lucide-react"
 
-export default function AboutSection() {
+export default function AboutSection({ settings }: { settings?: any }) {
   const [isExpanded, setIsExpanded] = useState(false)
   const [isVisible, setIsVisible] = useState(false)
   const sectionRef = useRef<HTMLElement>(null)
@@ -43,11 +43,8 @@ export default function AboutSection() {
             }`}
           >
             <h2 className="text-3xl md:text-4xl font-bold text-[#0D2240] mb-6">من نحن</h2>
-            <p className="text-lg text-[#2D3640] leading-relaxed mb-6">
-              شركة DGR Diamond Growth هي شركة مقاولات متخصصة في الأعمال المدنية، الاتصالات، أنظمة التيار الخفيف، والخدمات الكهروميكانيكية.
-              <br/><br/>
-              <strong>المقر الرئيسي في الأردن، منذ عام 2012</strong><br/>
-              <strong>Head office in Jordan, since 2012</strong>
+            <p className="text-lg text-[#2D3640] leading-relaxed mb-6 whitespace-pre-line">
+              {settings?.home?.aboutSummary || "شركة Diamond Growth هي شركة مقاولات متخصصة في الأعمال المدنية، الاتصالات، أنظمة التيار الخفيف، والخدمات الكهروميكانيكية.\n\nالمقر الرئيسي في الأردن، منذ عام 2012\nHead office in Jordan, since 2012"}
             </p>
 
             <div
@@ -55,17 +52,10 @@ export default function AboutSection() {
                 isExpanded ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
               }`}
             >
-              <p className="text-lg text-[#2D3640] leading-relaxed mb-4">
-                نقدم حلول متكاملة تشمل التوريد، دراسات الجدوى، التصميم، الهندسة، إدارة المشاريع، التنفيذ، وتسليم المشاريع الجاهزة.
-              </p>
-              <p className="text-lg text-[#2D3640] leading-relaxed mb-6">
-                لدينا شراكات قوية مع موردين ومصنعين عالميين لتوفير أفضل الخدمات بأعلى جودة.
+              <p className="text-lg text-[#2D3640] leading-relaxed mb-4 whitespace-pre-line">
+                {settings?.about?.content || "نقدم حلول متكاملة تشمل التوريد، دراسات الجدوى، التصميم، الهندسة، إدارة المشاريع، التنفيذ، وتسليم المشاريع الجاهزة."}
               </p>
             </div>
-
-            <p className="text-lg text-[#2D3640] leading-relaxed mb-8">
-              نحن نلتزم بتقديم أعلى جودة دون أي تنازل، ونحرص على توفير بيئة عمل آمنة وصحية، معتمدين على أحدث التقنيات والحلول المستدامة.
-            </p>
 
             <div className="flex gap-4 items-center">
               <Link href="/about">
@@ -100,10 +90,10 @@ export default function AboutSection() {
             }`}
           >
             {[
-              { number: "+110", label: "مشروع مكتمل", delay: "delay-100" },
-              { number: "+100", label: "موظف محترف", delay: "delay-200" },
-              { number: "2", label: "مكاتب إقليمية", delay: "delay-300" },
-              { number: "2023", label: "سنة التأسيس بالسعودية", delay: "delay-400" },
+              { number: `+${settings?.achievements?.projectsCompleted || 110}`, label: "مشروع مكتمل", delay: "delay-100" },
+              { number: `+${settings?.achievements?.satisfiedClients || 100}`, label: "عميل راضٍ", delay: "delay-200" },
+              { number: `${settings?.achievements?.yearsExperience || 15}`, label: "سنوات الخبرة", delay: "delay-300" },
+              { number: `+${settings?.achievements?.experts || 45}`, label: "خبير ومهندس", delay: "delay-400" },
             ].map((item, index) => (
               <Card
                 key={index}

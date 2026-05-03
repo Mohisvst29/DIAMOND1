@@ -1,6 +1,6 @@
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import Link from "next/link"
+import { Link } from "@/navigation"
 import { ArrowLeft, Calendar, Clock, User, Share2 } from "lucide-react"
 
 interface BlogPostProps {
@@ -66,7 +66,7 @@ export default function BlogPost({ post, relatedPosts = [] }: BlogPostProps) {
                   <img
                     src={
                       post.image ||
-                      `/placeholder.svg?height=400&width=800&query=${post.title || "/placeholder.svg"} featured image`
+                      ""
                     }
                     alt={post.title}
                     className="w-full h-64 md:h-96 object-cover rounded-lg shadow-lg"

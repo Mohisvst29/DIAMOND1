@@ -1,77 +1,195 @@
-import connectDB from "@/lib/db"
-import Post from "@/models/Post"
-import Link from "next/link"
+"use client"
+
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
-import { Plus, Pencil, Trash2 } from "lucide-react"
-import { deletePost } from "@/actions/blog-actions"
+import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Label } from "@/components/ui/label"
+import { toast } from "sonner"
+import { CldUploadWidget } from "next-cloudinary"
+import { Trash2, Edit, Image as ImageIcon } from "lucide-react"
 
-export const dynamic = "force-dynamic"
+export default function BlogAdmin() {
+  const [posts, setPosts] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
+  const [editingId, setEditingId] = useState<string | null>(null)
+  
+  const [formData, setFormData] = useState({
+    title: "",
+    excerpt: "",
+    content: "",
+    author: "",
+    featuredImage: "",
+    isPublished: true
+  })
 
-export default async function BlogAdminPage() {
-    const db = await connectDB()
-    let posts: any[] = []
-    if (db) {
-        try {
-            posts = await Post.find({}).sort({ createdAt: -1 })
-        } catch (e) {
-            posts = []
-        }
+  const fetchPosts = () => {
+    setLoading(true)
+    fetch('/api/blog')
+      .then(res => res.json())
+      .then(data => {
+        setPosts(Array.isArray(data) ? data : [])
+        setLoading(false)
+      })
+      .catch(() => setLoading(false))
+  }
+
+  useEffect(() => {
+    fetchPosts()
+  }, [])
+
+  const resetForm = () => {
+    setFormData({ title: "", excerpt: "", content: "", author: "", featuredImage: "", isPublished: true })
+    setEditingId(null)
+  }
+
+  const handleEdit = (post: any) => {
+    setFormData({
+      title: post.title || "",
+      excerpt: post.excerpt || "",
+      content: post.content || "",
+      author: post.author || "",
+      featuredImage: post.featuredImage || "",
+      isPublished: post.isPublished !== undefined ? post.isPublished : true
+    })
+    setEditingId(post._id)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  const handleDelete = async (id: string) => {
+    if (!confirm("هل أنت متأكد من الحذف؟")) return
+    try {
+      const res = await fetch(`/api/blog/${id}`, { method: 'DELETE' })
+      if (res.ok) {
+        toast.success("تم الحذف بنجاح")
+        fetchPosts()
+      }
+    } catch {
+      toast.error("حدث خطأ أثناء الحذف")
     }
+  }
 
-    return (
-        <div className="space-y-6 pt-6">
-            <div className="flex items-center justify-between">
-                <h1 className="text-3xl font-bold">Blog Posts</h1>
-                <Link href="/admin/blog/new">
-                    <Button>
-                        <Plus className="mr-2 h-4 w-4" /> New Post
-                    </Button>
-                </Link>
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    try {
+      const url = editingId ? `/api/blog/${editingId}` : '/api/blog'
+      const method = editingId ? 'PUT' : 'POST'
+      
+      const res = await fetch(url, {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      })
+
+      if (res.ok) {
+        toast.success(editingId ? "تم التعديل بنجاح" : "تمت الإضافة بنجاح")
+        resetForm()
+        fetchPosts()
+      } else {
+        toast.error("حدث خطأ")
+      }
+    } catch {
+      toast.error("حدث خطأ")
+    }
+  }
+
+  return (
+    <div className="space-y-8" dir="rtl">
+      <h2 className="text-2xl font-bold tracking-tight text-slate-800">إدارة المدونة والمقالات</h2>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>{editingId ? "تعديل مقال" : "إضافة مقال جديد"}</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <Label>عنوان المقال</Label>
+                <Input required value={formData.title} onChange={e => setFormData({...formData, title: e.target.value})} />
+              </div>
+              <div className="space-y-2">
+                <Label>الكاتب</Label>
+                <Input value={formData.author} onChange={e => setFormData({...formData, author: e.target.value})} />
+              </div>
+            </div>
+            
+            <div className="space-y-2">
+              <Label>مقتطف (Excerpt)</Label>
+              <Textarea value={formData.excerpt} onChange={e => setFormData({...formData, excerpt: e.target.value})} />
             </div>
 
-            <div className="rounded-md border">
-                <div className="flex flex-col">
-                    <div className="grid grid-cols-12 gap-4 border-b bg-muted/50 p-4 font-medium">
-                        <div className="col-span-6">Title</div>
-                        <div className="col-span-2">Status</div>
-                        <div className="col-span-2">Date</div>
-                        <div className="col-span-2 text-right">Actions</div>
-                    </div>
-                    {posts.length === 0 ? (
-                        <div className="p-4 text-center text-muted-foreground">No posts found.</div>
-                    ) : (
-                        posts.map((post) => (
-                            <div key={post._id} className="grid grid-cols-12 gap-4 border-b p-4 items-center last:border-0 hover:bg-muted/10">
-                                <div className="col-span-6 font-medium">
-                                    {post.title}
-                                    <div className="text-xs text-muted-foreground">{post.slug}</div>
-                                </div>
-                                <div className="col-span-2">
-                                    <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold ${post.isPublished ? "bg-green-100 text-green-800" : "bg-yellow-100 text-yellow-800"
-                                        }`}>
-                                        {post.isPublished ? "Published" : "Draft"}
-                                    </span>
-                                </div>
-                                <div className="col-span-2 text-sm text-muted-foreground">
-                                    {new Date(post.createdAt).toLocaleDateString()}
-                                </div>
-                                <div className="col-span-2 flex justify-end gap-2">
-                                    <Link href={`/admin/blog/${post._id}`}>
-                                        <Button variant="ghost" size="icon">
-                                            <Pencil className="h-4 w-4" />
-                                        </Button>
-                                    </Link>
-                                    <form action={deletePost.bind(null, post._id.toString())}>
-                                        <Button variant="ghost" size="icon" className="text-destructive hover:text-destructive">
-                                            <Trash2 className="h-4 w-4" />
-                                        </Button>
-                                    </form>
-                                </div>
-                            </div>
-                        ))
+            <div className="space-y-2">
+              <Label>محتوى المقال (دعم HTML/نص)</Label>
+              <Textarea className="min-h-[200px]" required value={formData.content} onChange={e => setFormData({...formData, content: e.target.value})} />
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <Label>صورة المقال</Label>
+                <div className="flex items-center gap-4">
+                  {formData.featuredImage && <img src={formData.featuredImage} alt="Preview" className="h-16 rounded" />}
+                  <CldUploadWidget 
+                    signatureEndpoint="/api/cloudinary/sign"
+                    onSuccess={(result: any) => setFormData({...formData, featuredImage: result.info.secure_url})}
+                  >
+                    {({ open }) => (
+                      <Button type="button" variant="outline" onClick={() => open()}><ImageIcon className="w-4 h-4 ml-2"/> رفع صورة</Button>
                     )}
+                  </CldUploadWidget>
                 </div>
+              </div>
+              <div className="flex items-center space-x-2 space-x-reverse mt-8">
+                <input 
+                  type="checkbox" 
+                  id="isPublished" 
+                  checked={formData.isPublished} 
+                  onChange={e => setFormData({...formData, isPublished: e.target.checked})}
+                  className="w-4 h-4"
+                />
+                <Label htmlFor="isPublished">نشر المقال (يظهر للزوار)</Label>
+              </div>
             </div>
-        </div>
-    )
+
+            <div className="flex gap-4">
+              <Button type="submit" className="bg-slate-800">{editingId ? "حفظ" : "إضافة"}</Button>
+              {editingId && <Button type="button" variant="outline" onClick={resetForm}>إلغاء</Button>}
+            </div>
+          </form>
+        </CardContent>
+      </Card>
+
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {loading ? (
+          <div>جاري التحميل...</div>
+        ) : posts.length === 0 ? (
+          <div>لا توجد مقالات.</div>
+        ) : (
+          posts.map((post) => (
+            <Card key={post._id} className="overflow-hidden">
+              {post.featuredImage && <img src={post.featuredImage} alt={post.title} className="w-full h-40 object-cover" />}
+              <CardContent className="p-4">
+                <div className="flex justify-between items-start mb-2">
+                  <h3 className="font-bold text-lg line-clamp-1">{post.title}</h3>
+                  <span className={`text-xs px-2 py-1 rounded-full ${post.isPublished ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'}`}>
+                    {post.isPublished ? 'منشور' : 'مسودة'}
+                  </span>
+                </div>
+                <p className="text-slate-600 text-sm mb-4 line-clamp-2">{post.excerpt}</p>
+                <div className="flex justify-between items-center mt-4 pt-4 border-t">
+                  <Button variant="outline" size="sm" onClick={() => handleEdit(post)}>
+                    <Edit className="w-4 h-4 ml-1" /> تعديل
+                  </Button>
+                  <Button variant="destructive" size="sm" onClick={() => handleDelete(post._id)}>
+                    <Trash2 className="w-4 h-4 ml-1" /> حذف
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          ))
+        )}
+      </div>
+    </div>
+  )
 }

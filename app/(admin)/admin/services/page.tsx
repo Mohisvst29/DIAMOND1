@@ -1,95 +1,201 @@
-import { getServices, deleteService } from "@/actions/service-actions"
+"use client"
+
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "@/components/ui/table"
-import Link from "next/link"
-import { Plus, Pencil, Trash2, ArrowUpDown } from "lucide-react"
-import * as LucideIcons from "lucide-react"
+import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Label } from "@/components/ui/label"
+import { toast } from "sonner"
+import { CldUploadWidget } from "next-cloudinary"
+import { Trash2, Plus, Edit, Image as ImageIcon } from "lucide-react"
 
-export default async function ServicesAdminPage() {
-    const services = await getServices()
+export default function ServicesAdmin() {
+  const [services, setServices] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
+  const [editingId, setEditingId] = useState<string | null>(null)
+  
+  // Form State
+  const [formData, setFormData] = useState<Partial<any>>({
+    title: "",
+    titleEn: "",
+    description: "",
+    descriptionEn: "",
+    details: "",
+    detailsEn: "",
+    icon: "Wrench",
+    image: "",
+    gallery: [] as string[],
+    features: [] as string[],
+    benefits: [] as string[],
+    order: 0
+  })
 
-    return (
-        <div className="space-y-6">
-            <div className="flex items-center justify-between">
-                <div>
-                    <h1 className="text-3xl font-bold text-[#0D2240] mb-2">إدارة الخدمات</h1>
-                    <p className="text-gray-500">عرض وإدارة الخدمات المقدمة</p>
+  const fetchServices = () => {
+    setLoading(true)
+    fetch('/api/services')
+      .then(res => res.json())
+      .then(data => {
+        setServices(Array.isArray(data) ? data : [])
+        setLoading(false)
+      })
+      .catch(() => setLoading(false))
+  }
+
+  useEffect(() => {
+    fetchServices()
+  }, [])
+
+  const resetForm = () => {
+    setFormData({ title: "", description: "", details: "", icon: "", image: "", gallery: [], features: [], benefits: [] })
+    setEditingId(null)
+  }
+
+  const handleEdit = (service: any) => {
+    setFormData({
+      title: service.title,
+      description: service.description,
+      details: service.details,
+      icon: service.icon || "",
+      image: service.image || "",
+      gallery: service.gallery || [],
+      features: service.features || [],
+      benefits: service.benefits || []
+    })
+    setEditingId(service._id)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  const handleDelete = async (id: string) => {
+    if (!confirm("هل أنت متأكد من حذف هذه الخدمة؟")) return
+    try {
+      const res = await fetch(`/api/services/${id}`, { method: 'DELETE' })
+      if (res.ok) {
+        toast.success("تم الحذف بنجاح")
+        fetchServices()
+      } else {
+        const errData = await res.json()
+        toast.error(errData.error || "حدث خطأ أثناء الحذف")
+        console.error("Delete error:", errData)
+      }
+    } catch (error: any) {
+      toast.error(error.message || "حدث خطأ أثناء الحذف")
+    }
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    try {
+      const url = editingId ? `/api/services/${editingId}` : '/api/services'
+      const method = editingId ? 'PUT' : 'POST'
+      
+      const res = await fetch(url, {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      })
+
+      if (res.ok) {
+        toast.success(editingId ? "تم التعديل بنجاح" : "تمت الإضافة بنجاح")
+        resetForm()
+        fetchServices()
+      } else {
+        toast.error("حدث خطأ")
+      }
+    } catch {
+      toast.error("حدث خطأ")
+    }
+  }
+
+  return (
+    <div className="space-y-8" dir="rtl">
+      <div className="flex justify-between items-center">
+        <h2 className="text-2xl font-bold tracking-tight text-slate-800">إدارة الخدمات</h2>
+      </div>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>{editingId ? "تعديل خدمة" : "إضافة خدمة جديدة"}</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="grid md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <Label>عنوان الخدمة (بالعربية)</Label>
+                    <Input value={formData.title} onChange={e => setFormData({ ...formData, title: e.target.value })} required />
+                  </div>
+                  <div className="space-y-2">
+                    <Label>عنوان الخدمة (بالإنجليزية) اختياري</Label>
+                    <Input value={formData.titleEn || ''} onChange={e => setFormData({ ...formData, titleEn: e.target.value })} placeholder="مثال: Civil Works" />
+                  </div>
+                  <div className="space-y-2">
+                    <Label>وصف مختصر (بالعربية)</Label>
+                    <Textarea value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })} required />
+                  </div>
+                  <div className="space-y-2">
+                    <Label>وصف مختصر (بالإنجليزية) اختياري</Label>
+                    <Textarea value={formData.descriptionEn || ''} onChange={e => setFormData({ ...formData, descriptionEn: e.target.value })} placeholder="Brief description in English" />
+                  </div>
+                  <div className="space-y-2">
+                    <Label>التفاصيل الكاملة (بالعربية)</Label>
+                    <Textarea value={formData.details} onChange={e => setFormData({ ...formData, details: e.target.value })} rows={5} required />
+                  </div>
+                  <div className="space-y-2">
+                    <Label>التفاصيل الكاملة (بالإنجليزية) اختياري</Label>
+                    <Textarea value={formData.detailsEn || ''} onChange={e => setFormData({ ...formData, detailsEn: e.target.value })} rows={5} placeholder="Full details in English" />
+                  </div>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <Label>الصورة الرئيسية</Label>
+                <div className="flex items-center gap-4">
+                  {formData.image && <img src={formData.image} alt="Preview" className="h-16 rounded" />}
+                  <CldUploadWidget 
+                    signatureEndpoint="/api/cloudinary/sign"
+                    onSuccess={(result: any) => setFormData({...formData, image: result.info.secure_url})}
+                  >
+                    {({ open }) => (
+                      <Button type="button" variant="outline" onClick={() => open()}><ImageIcon className="w-4 h-4 ml-2"/> رفع صورة</Button>
+                    )}
+                  </CldUploadWidget>
                 </div>
-                <Link href="/admin/services/new">
-                    <Button className="bg-[#0D2240] hover:bg-[#1a3a5c] text-white">
-                        <Plus className="w-4 h-4 ml-2" />
-                        إضافة خدمة جديدة
-                    </Button>
-                </Link>
+              </div>
             </div>
 
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-                <Table>
-                    <TableHeader className="bg-gray-50/50">
-                        <TableRow>
-                            <TableHead className="text-right w-16">#</TableHead>
-                            <TableHead className="text-right">الأيقونة</TableHead>
-                            <TableHead className="text-right">عنوان الخدمة</TableHead>
-                            <TableHead className="text-right">الوصف المختصر</TableHead>
-                            <TableHead className="text-right">الإجراءات</TableHead>
-                        </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                        {services.length === 0 ? (
-                            <TableRow>
-                                <TableCell colSpan={5} className="text-center py-12 text-gray-500">
-                                    لا توجد خدمات مضافة حالياً
-                                </TableCell>
-                            </TableRow>
-                        ) : (
-                            services.map((service: any) => {
-                                // Dynamic Icon Component
-                                const IconComponent = (LucideIcons as any)[service.icon] || LucideIcons.HelpCircle;
-
-                                return (
-                                    <TableRow key={service._id} className="group hover:bg-gray-50/50 transition-colors">
-                                        <TableCell className="font-mono text-gray-400">
-                                            {service.order || 0}
-                                        </TableCell>
-                                        <TableCell>
-                                            <div className="p-2 bg-gray-100 rounded-lg w-fit group-hover:bg-[#C4D600] group-hover:text-[#0D2240] transition-colors">
-                                                <IconComponent className="w-5 h-5" />
-                                            </div>
-                                        </TableCell>
-                                        <TableCell className="font-medium text-[#0D2240]">
-                                            {service.title}
-                                        </TableCell>
-                                        <TableCell className="text-gray-500 max-w-xs truncate">
-                                            {service.description}
-                                        </TableCell>
-                                        <TableCell>
-                                            <div className="flex items-center gap-2">
-                                                <Link href={`/admin/services/${service._id}`}>
-                                                    <Button variant="ghost" size="icon" className="h-8 w-8 text-[#0D2240] hover:text-[#C4D600] hover:bg-[#0D2240]">
-                                                        <Pencil className="w-4 h-4" />
-                                                    </Button>
-                                                </Link>
-                                                <form action={deleteService.bind(null, service._id)}>
-                                                    <Button variant="ghost" size="icon" className="h-8 w-8 text-red-500 hover:text-white hover:bg-red-500">
-                                                        <Trash2 className="w-4 h-4" />
-                                                    </Button>
-                                                </form>
-                                            </div>
-                                        </TableCell>
-                                    </TableRow>
-                                )
-                            })
-                        )}
-                    </TableBody>
-                </Table>
+            <div className="flex gap-4">
+              <Button type="submit" className="bg-slate-800 hover:bg-slate-700">{editingId ? "حفظ التعديلات" : "إضافة الخدمة"}</Button>
+              {editingId && <Button type="button" variant="outline" onClick={resetForm}>إلغاء التعديل</Button>}
             </div>
-        </div>
-    )
+          </form>
+        </CardContent>
+      </Card>
+
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {loading ? (
+          <div>جاري التحميل...</div>
+        ) : services.length === 0 ? (
+          <div>لا توجد خدمات مضافة حالياً.</div>
+        ) : (
+          services.map((service) => (
+            <Card key={service._id} className="overflow-hidden">
+              {service.image && <img src={service.image} alt={service.title} className="w-full h-40 object-cover" />}
+              <CardContent className="p-4">
+                <h3 className="font-bold text-lg mb-2">{service.title}</h3>
+                <p className="text-slate-600 text-sm mb-4 line-clamp-2">{service.description}</p>
+                <div className="flex justify-between items-center mt-4 pt-4 border-t">
+                  <Button variant="outline" size="sm" onClick={() => handleEdit(service)}>
+                    <Edit className="w-4 h-4 ml-1" /> تعديل
+                  </Button>
+                  <Button variant="destructive" size="sm" onClick={() => handleDelete(service._id)}>
+                    <Trash2 className="w-4 h-4 ml-1" /> حذف
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          ))
+        )}
+      </div>
+    </div>
+  )
 }

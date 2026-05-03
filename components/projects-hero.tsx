@@ -3,7 +3,7 @@ export default function ProjectsHero() {
     <section
       className="relative py-32 bg-cover bg-center bg-no-repeat"
       style={{
-        backgroundImage: "url(/bb.png)", // تم تصحيح القوس الناقص
+        backgroundImage: "",
       }}
     >
       <div className="absolute inset-0 bg-[#0D2240]/70" />

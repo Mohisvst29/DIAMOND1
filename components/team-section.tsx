@@ -1,33 +1,15 @@
 import { Card } from "@/components/ui/card"
 
-const teamMembers = [
-  {
-    name: "م. المدير التنفيذي",
-    position: "المدير العام والمؤسس",
-    image: "/team-ceo.png",
-    description: "خبرة تزيد عن 20 عاماً في مجال المقاولات والتشطيبات",
-  },
-  {
-    name: "م. أحمد محمد",
-    position: "مدير المشاريع",
-    image: "/team-project-manager.png",
-    description: "مهندس مدني متخصص في إدارة المشاريع الكبرى",
-  },
-  {
-    name: "م. فاطمة العلي",
-    position: "مهندسة الاتصالات",
-    image: "/team-interior-designer.png",
-    description: "خبيرة في تصميم شبكات الاتصالات والبنية التحتية",
-  },
-  {
-    name: "أ. محمد السعد",
-    position: "مدير العمليات",
-    image: "/team-operations-manager.png",
-    description: "متخصص في إدارة العمليات وضمان الجودة",
-  },
-]
+interface TeamSectionProps {
+  teamMembers?: {
+    name: string;
+    position: string;
+    image: string;
+    description: string;
+  }[]
+}
 
-export default function TeamSection() {
+export default function TeamSection({ teamMembers = [] }: TeamSectionProps) {
   return (
     <section className="py-20">
       <div className="container mx-auto px-4">
@@ -41,11 +23,11 @@ export default function TeamSection() {
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {teamMembers.map((member, index) => (
+          {teamMembers.length > 0 ? teamMembers.map((member, index) => (
             <Card key={index} className="overflow-hidden text-center hover:shadow-lg transition-shadow">
               <div className="relative">
                 <img
-                  src={member.image || "/placeholder.svg?height=300&width=300&query=professional team member"}
+                  src={member.image || ""}
                   alt={member.name}
                   className="w-full h-64 object-cover"
                 />
@@ -57,7 +39,11 @@ export default function TeamSection() {
                 <p className="text-[#2D3640] text-sm leading-relaxed">{member.description}</p>
               </div>
             </Card>
-          ))}
+          )) : (
+            <div className="col-span-full text-center text-gray-500 py-8">
+              لا يوجد أعضاء مضافين حالياً
+            </div>
+          )}
         </div>
 
         <div className="mt-16 text-center">

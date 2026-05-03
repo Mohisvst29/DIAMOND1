@@ -3,14 +3,13 @@
 import { useEffect, useState } from "react"
 import { Card } from "@/components/ui/card"
 
-const achievements = [
-  { number: 110, label: "مشروع مكتمل", suffix: "+" },
-  { number: 100, label: "موظف محترف", suffix: "+" },
-  { number: 2, label: "مكاتب إقليمية", suffix: "" },
-  { number: 2023, label: "سنة التأسيس", suffix: "" },
-]
-
-export default function AchievementsCounter() {
+export default function AchievementsCounter({ settings }: { settings?: any }) {
+  const achievements = [
+    { number: settings?.achievements?.projectsCompleted || 110, label: "مشروع مكتمل", suffix: "+" },
+    { number: settings?.achievements?.satisfiedClients || 100, label: "عميل راضٍ", suffix: "+" },
+    { number: settings?.achievements?.yearsExperience || 15, label: "سنوات الخبرة", suffix: "+" },
+    { number: settings?.achievements?.experts || 45, label: "خبير ومهندس", suffix: "+" },
+  ]
   const [counts, setCounts] = useState(achievements.map(() => 0))
   const [isVisible, setIsVisible] = useState(false)
 

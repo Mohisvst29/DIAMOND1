@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@/navigation";
 import { Mail, MapPin, Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -40,13 +40,13 @@ const TikTokIcon = () => (
 );
 
 import connectDB from "@/lib/db";
-import SiteContent from "@/models/SiteContent";
+import SiteSettings from "@/models/SiteSettings";
 
 export default async function Footer() {
   let logoUrl = "/logo.png"
   let logoHeight = "48" // default px
   
-  let contactEmail = "info@nmudiamond.com"
+  let contactEmail = "info@diamondgrowth.com"
   let contactLocation = "طريق الملك عبدالعزيز، السعودية والأردن"
   
   let socialFacebook = ""
@@ -59,27 +59,20 @@ export default async function Footer() {
   try {
     const db = await connectDB()
     if (db) {
-      const content = await SiteContent.find({ key: { $in: [
-        'logo_image', 'logo_height', 'contact_email', 'contact_location',
-        'social_facebook', 'social_twitter', 'social_instagram', 'social_linkedin', 'social_snapchat', 'social_tiktok'
-      ] } }).lean()
+      const settings = await SiteSettings.findOne({}).lean() || {}
       
-      const getVal = (k: string) => content.find((c: any) => c.key === k)?.value as string || ""
+      if (settings?.logo?.url) logoUrl = settings.logo.url
+      if (settings?.logo?.height) logoHeight = settings.logo.height.toString()
       
-      const urlDoc = getVal('logo_image')
-      const heightDoc = getVal('logo_height')
-      if (urlDoc) logoUrl = urlDoc
-      if (heightDoc) logoHeight = heightDoc
+      if (settings?.contact?.emails?.length > 0) contactEmail = settings.contact.emails[0]
+      if (settings?.contact?.addresses?.length > 0) contactLocation = settings.contact.addresses.join("، ")
       
-      if (getVal('contact_email')) contactEmail = getVal('contact_email')
-      if (getVal('contact_location')) contactLocation = getVal('contact_location')
-      
-      socialFacebook = getVal('social_facebook')
-      socialTwitter = getVal('social_twitter')
-      socialInstagram = getVal('social_instagram')
-      socialLinkedin = getVal('social_linkedin')
-      socialSnapchat = getVal('social_snapchat')
-      socialTiktok = getVal('social_tiktok')
+      socialFacebook = settings?.social?.facebook || ""
+      socialTwitter = settings?.social?.twitter || ""
+      socialInstagram = settings?.social?.instagram || ""
+      socialLinkedin = settings?.social?.linkedin || ""
+      socialSnapchat = settings?.social?.snapchat || ""
+      socialTiktok = settings?.social?.tiktok || ""
     }
   } catch (error) {
     console.error("Failed to fetch footer settings:", error)
@@ -94,7 +87,7 @@ export default async function Footer() {
             <div className="mb-6 bg-white p-3 rounded-lg inline-block">
               <img
                 src={logoUrl}
-                alt="DGR Diamond Growth"
+                alt="Diamond Growth"
                 style={{ height: `${logoHeight}px`, width: 'auto' }}
               />
             </div>
@@ -190,7 +183,7 @@ export default async function Footer() {
         {/* Copyright */}
         <div className="border-t border-gray-700 pt-8 text-center">
           <p className="text-gray-300">
-            © 2025 شركة DGR Diamond Growth. جميع الحقوق محفوظة.
+            © 2025 شركة Diamond Growth. جميع الحقوق محفوظة.
           </p>
           <p className="text-gray-300 mt-2">
             تم التصميم بواسطة{" "}

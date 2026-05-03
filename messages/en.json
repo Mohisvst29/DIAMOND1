@@ -1,0 +1,15 @@
+{
+  "Navigation": {
+    "home": "Home",
+    "about": "About Us",
+    "services": "Services",
+    "portfolio": "Portfolio",
+    "blog": "Blog",
+    "contact": "Contact"
+  },
+  "Common": {
+    "readMore": "Read More",
+    "contactUs": "Contact Us",
+    "allRightsReserved": "All Rights Reserved."
+  }
+}

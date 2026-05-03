@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import Link from "next/link"
+import { Link } from "@/navigation"
 import { ArrowLeft, Eye, MapPin } from "lucide-react"
 
 interface Project {
@@ -74,7 +74,7 @@ export default function ProjectsSection({ projects }: ProjectsSectionProps) {
               {/* صورة المشروع */}
               <div className="relative overflow-hidden">
                 <img
-                  src={project.image || "/placeholder.svg"}
+                  src={project.image || ""}
                   alt={project.title}
                   className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-700"
                 />

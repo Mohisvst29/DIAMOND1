@@ -1,7 +1,7 @@
 import { Card } from "@/components/ui/card"
 import { Eye, Target, Heart, Award } from "lucide-react"
 
-export default function VisionMission() {
+export default function VisionMission({ settings }: { settings?: any }) {
   return (
     <section className="py-20 bg-gray-50">
       <div className="container mx-auto px-4">
@@ -23,7 +23,7 @@ export default function VisionMission() {
               <h3 className="text-2xl font-bold text-[#0D2240]">رؤيتنا</h3>
             </div>
             <p className="text-lg text-[#2D3640] leading-relaxed">
-              تطمح DGR Diamond Growth لأن تكون واحدة من الشركات الرائدة في قطاع المقاولات بالمملكة، عبر تقديم حلول مستدامة ومتطورة تساهم في تحقيق رؤية 2030 ودعم التنمية الشاملة.
+              {settings?.about?.vision || "تطمح Diamond Growth لأن تكون واحدة من الشركات الرائدة في قطاع المقاولات بالمملكة، عبر تقديم حلول مستدامة ومتطورة تساهم في تحقيق رؤية 2030 ودعم التنمية الشاملة."}
             </p>
           </Card>
 
@@ -35,7 +35,7 @@ export default function VisionMission() {
               <h3 className="text-2xl font-bold text-[#0D2240]">رسالتنا</h3>
             </div>
             <p className="text-lg text-[#2D3640] leading-relaxed">
-              الريادة والتميز في كل ما نقوم به من خلال تقديم خدمات هندسية وفنية مبتكرة، توظيف أحدث التقنيات، والالتزام بأعلى معايير الجودة والسلامة لتلبية تطلعات عملائنا وشركائنا.
+              {settings?.about?.mission || "الريادة والتميز في كل ما نقوم به من خلال تقديم خدمات هندسية وفنية مبتكرة، توظيف أحدث التقنيات، والالتزام بأعلى معايير الجودة والسلامة لتلبية تطلعات عملائنا وشركائنا."}
             </p>
           </Card>
         </div>

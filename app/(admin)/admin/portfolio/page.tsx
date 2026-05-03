@@ -1,0 +1,197 @@
+"use client"
+
+import { useState, useEffect } from "react"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Label } from "@/components/ui/label"
+import { toast } from "sonner"
+import { CldUploadWidget } from "next-cloudinary"
+import { Trash2, Edit, Image as ImageIcon } from "lucide-react"
+
+export default function PortfolioAdmin() {
+  const [projects, setProjects] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
+  const [editingId, setEditingId] = useState<string | null>(null)
+  
+  const [formData, setFormData] = useState({
+    title: "",
+    location: "",
+    category: "",
+    description: "",
+    area: "",
+    duration: "",
+    year: "",
+    image: "",
+    images: [] as string[],
+    services: [] as string[],
+    features: [] as string[]
+  })
+
+  const fetchProjects = () => {
+    setLoading(true)
+    fetch('/api/portfolio')
+      .then(res => res.json())
+      .then(data => {
+        setProjects(Array.isArray(data) ? data : [])
+        setLoading(false)
+      })
+      .catch(() => setLoading(false))
+  }
+
+  useEffect(() => {
+    fetchProjects()
+  }, [])
+
+  const resetForm = () => {
+    setFormData({
+      title: "", location: "", category: "", description: "", area: "", duration: "", year: "", image: "", images: [], services: [], features: []
+    })
+    setEditingId(null)
+  }
+
+  const handleEdit = (project: any) => {
+    setFormData({
+      title: project.title,
+      location: project.location,
+      category: project.category,
+      description: project.description,
+      area: project.area,
+      duration: project.duration,
+      year: project.year,
+      image: project.image,
+      images: project.images || [],
+      services: project.services || [],
+      features: project.features || []
+    })
+    setEditingId(project._id)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  const handleDelete = async (id: string) => {
+    if (!confirm("هل أنت متأكد من الحذف؟")) return
+    try {
+      const res = await fetch(`/api/portfolio/${id}`, { method: 'DELETE' })
+      if (res.ok) {
+        toast.success("تم الحذف بنجاح")
+        fetchProjects()
+      }
+    } catch {
+      toast.error("حدث خطأ أثناء الحذف")
+    }
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    try {
+      const url = editingId ? `/api/portfolio/${editingId}` : '/api/portfolio'
+      const method = editingId ? 'PUT' : 'POST'
+      
+      const res = await fetch(url, {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      })
+
+      if (res.ok) {
+        toast.success(editingId ? "تم التعديل بنجاح" : "تمت الإضافة بنجاح")
+        resetForm()
+        fetchProjects()
+      } else {
+        toast.error("حدث خطأ")
+      }
+    } catch {
+      toast.error("حدث خطأ")
+    }
+  }
+
+  return (
+    <div className="space-y-8" dir="rtl">
+      <h2 className="text-2xl font-bold tracking-tight text-slate-800">معرض الأعمال</h2>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>{editingId ? "تعديل مشروع" : "إضافة مشروع جديد"}</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="space-y-2">
+                <Label>اسم المشروع</Label>
+                <Input required value={formData.title} onChange={e => setFormData({...formData, title: e.target.value})} />
+              </div>
+              <div className="space-y-2">
+                <Label>القسم (Category)</Label>
+                <Input required value={formData.category} onChange={e => setFormData({...formData, category: e.target.value})} />
+              </div>
+              <div className="space-y-2">
+                <Label>الموقع (Location)</Label>
+                <Input required value={formData.location} onChange={e => setFormData({...formData, location: e.target.value})} />
+              </div>
+              <div className="space-y-2">
+                <Label>المساحة (Area)</Label>
+                <Input value={formData.area} onChange={e => setFormData({...formData, area: e.target.value})} />
+              </div>
+              <div className="space-y-2">
+                <Label>سنة التنفيذ</Label>
+                <Input value={formData.year} onChange={e => setFormData({...formData, year: e.target.value})} />
+              </div>
+            </div>
+            
+            <div className="space-y-2">
+              <Label>الوصف</Label>
+              <Textarea required value={formData.description} onChange={e => setFormData({...formData, description: e.target.value})} />
+            </div>
+
+            <div className="space-y-2">
+              <Label>صورة العرض الرئيسية</Label>
+              <div className="flex items-center gap-4">
+                {formData.image && <img src={formData.image} alt="Preview" className="h-16 rounded" />}
+                <CldUploadWidget 
+                  signatureEndpoint="/api/cloudinary/sign"
+                  onSuccess={(result: any) => setFormData({...formData, image: result.info.secure_url})}
+                >
+                  {({ open }) => (
+                    <Button type="button" variant="outline" onClick={() => open()}><ImageIcon className="w-4 h-4 ml-2"/> رفع صورة</Button>
+                  )}
+                </CldUploadWidget>
+              </div>
+            </div>
+
+            <div className="flex gap-4">
+              <Button type="submit" className="bg-slate-800">{editingId ? "حفظ" : "إضافة"}</Button>
+              {editingId && <Button type="button" variant="outline" onClick={resetForm}>إلغاء</Button>}
+            </div>
+          </form>
+        </CardContent>
+      </Card>
+
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {loading ? (
+          <div>جاري التحميل...</div>
+        ) : projects.length === 0 ? (
+          <div>لا يوجد مشاريع.</div>
+        ) : (
+          projects.map((project) => (
+            <Card key={project._id} className="overflow-hidden">
+              {project.image && <img src={project.image} alt={project.title} className="w-full h-48 object-cover" />}
+              <CardContent className="p-4">
+                <h3 className="font-bold text-lg">{project.title}</h3>
+                <p className="text-blue-600 text-sm mb-2">{project.category}</p>
+                <div className="flex justify-between items-center mt-4 pt-4 border-t">
+                  <Button variant="outline" size="sm" onClick={() => handleEdit(project)}>
+                    <Edit className="w-4 h-4" />
+                  </Button>
+                  <Button variant="destructive" size="sm" onClick={() => handleDelete(project._id)}>
+                    <Trash2 className="w-4 h-4" />
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          ))
+        )}
+      </div>
+    </div>
+  )
+}

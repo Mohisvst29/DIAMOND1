@@ -1,23 +1,29 @@
 import ClientHeader from "./client-header"
 import connectDB from "@/lib/db"
-import SiteContent from "@/models/SiteContent"
+import SiteSettings from "@/models/SiteSettings"
+import Service from "@/models/Service"
 
 export default async function Header() {
   let logoUrl = "/logo.png"
   let logoHeight = "48" // default px
+  let services: any[] = []
 
   try {
     const db = await connectDB()
     if (db) {
-      const content = await SiteContent.find({ key: { $in: ['logo_image', 'logo_height'] } }).lean()
-      const urlDoc = content.find((c: any) => c.key === 'logo_image')
-      const heightDoc = content.find((c: any) => c.key === 'logo_height')
-      if (urlDoc && urlDoc.value) logoUrl = urlDoc.value as string
-      if (heightDoc && heightDoc.value) logoHeight = heightDoc.value as string
+      const settings = await SiteSettings.findOne({}).lean()
+      if (settings?.logo?.url) logoUrl = settings.logo.url
+      if (settings?.logo?.height) logoHeight = settings.logo.height.toString()
+
+      const dbServices = await Service.find({}).sort({ order: 1, createdAt: -1 }).lean()
+      services = JSON.parse(JSON.stringify(dbServices)).map((s: any) => ({
+        ...s,
+        href: s.href || `/services/${s.title ? s.title.replace(/\s+/g, '-').toLowerCase() : 'unknown'}`
+      }))
     }
   } catch (error) {
     console.error("Failed to fetch logo settings:", error)
   }
 
-  return <ClientHeader logoUrl={logoUrl} logoHeight={logoHeight} />
+  return <ClientHeader logoUrl={logoUrl} logoHeight={logoHeight} services={services} />
 }

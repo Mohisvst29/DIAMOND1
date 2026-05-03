@@ -1,0 +1,15 @@
+{
+  "Navigation": {
+    "home": "الرئيسية",
+    "about": "من نحن",
+    "services": "الخدمات",
+    "portfolio": "الأعمال",
+    "blog": "المدونة",
+    "contact": "تواصل معنا"
+  },
+  "Common": {
+    "readMore": "اقرأ المزيد",
+    "contactUs": "تواصل معنا",
+    "allRightsReserved": "جميع الحقوق محفوظة."
+  }
+}

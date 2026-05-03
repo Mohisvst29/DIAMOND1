@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import Link from "next/link"
+import { Link } from "@/navigation"
 import { Palette, Building, Wrench, Zap, Hammer, Bold as Road, RefreshCw, Plus, Minus, Settings } from "lucide-react"
 
 // Map icon names to components (reusing logic or centralized map would be better)
@@ -89,9 +89,14 @@ export default function ServicesSection({ services }: ServicesSectionProps) {
                   } ${isVisible ? `opacity-100 translate-y-0 delay-[${300 + index * 100}ms]` : "opacity-0 translate-y-10"}`}
                 onClick={() => toggleCard(index)}
               >
+                {service.image && (
+                  <div className="w-full h-40 -mt-6 -mx-6 mb-6 overflow-hidden rounded-t-xl">
+                    <img src={service.image} alt={service.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                  </div>
+                )}
                 <div
                   className={`bg-[#C4D600] w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 transition-all duration-300 ${expandedCard === index ? "bg-[#0D2240] scale-110" : "group-hover:scale-110 group-hover:rotate-12"
-                    }`}
+                    } ${service.image ? "-mt-12 relative z-10 border-4 border-white" : ""}`}
                 >
                   <IconComponent
                     className={`w-8 h-8 transition-all duration-300 ${expandedCard === index ? "text-[#C4D600]" : "text-[#0D2240] group-hover:text-white"

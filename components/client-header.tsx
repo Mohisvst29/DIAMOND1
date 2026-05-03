@@ -1,29 +1,48 @@
 "use client"
 
 import { useState } from "react"
-import Link from "next/link"
+import { Link } from "@/navigation"
+import { usePathname, useRouter } from "next/navigation"
+import { useTranslations } from "next-intl"
 import { Button } from "@/components/ui/button"
-import { Menu, X, ChevronDown } from "lucide-react"
+import { Menu, X, ChevronDown, Globe } from "lucide-react"
 
-export default function ClientHeader({ logoUrl = "/logo.png", logoHeight = "48" }: { logoUrl?: string, logoHeight?: string }) {
+export default function ClientHeader({ logoUrl = "/logo.png", logoHeight = "48", services = [] }: { logoUrl?: string, logoHeight?: string, services?: any[] }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isServicesOpen, setIsServicesOpen] = useState(false)
+  
+  const pathname = usePathname()
+  const router = useRouter()
+  const t = useTranslations("Navigation")
+  const locale = pathname.startsWith('/en') ? 'en' : 'ar'
+
+  const toggleLanguage = () => {
+    const newLocale = locale === 'ar' ? 'en' : 'ar'
+    // Replace the first segment of the path with the new locale
+    const newPath = pathname.replace(`/${locale}`, `/${newLocale}`)
+    router.push(newPath || `/${newLocale}`)
+  }
+
+  const dynamicSubItems = services.length > 0 ? services.map(s => ({
+    name: locale === 'en' && s.titleEn ? s.titleEn : s.title,
+    href: s.href
+  })) : [
+    { name: locale === 'en' ? "Civil and MEP Works" : "الأعمال المدنية والكهروميكانيكية", href: "/services/civil-mep" },
+    { name: locale === 'en' ? "Low Current Systems" : "أنظمة التيار الخفيف", href: "/services/low-current" },
+    { name: locale === 'en' ? "Infrastructure & Telecom" : "البنية التحتية والاتصالات", href: "/services/infrastructure" },
+  ];
 
   const navigation = [
-    { name: "الرئيسية", href: "/" },
-    { name: "من نحن", href: "/about" },
+    { name: t("home"), href: "/" },
+    { name: t("about"), href: "/about" },
     {
-      name: "الخدمات",
+      name: t("services"),
       href: "/services",
       hasDropdown: true,
-      subItems: [
-        { name: "الأعمال المدنية والكهروميكانيكية", href: "/services/civil-mep" },
-        { name: "أنظمة التيار الخفيف", href: "/services/low-current" },
-        { name: "البنية التحتية والاتصالات", href: "/services/infrastructure" },
-      ],
+      subItems: dynamicSubItems,
     },
-    { name: "معرض الأعمال", href: "/projects" },
-    { name: "المدونة", href: "/blog" },
+    { name: t("portfolio"), href: "/projects" },
+    { name: t("blog"), href: "/blog" },
   ]
 
   return (
@@ -35,7 +54,7 @@ export default function ClientHeader({ logoUrl = "/logo.png", logoHeight = "48" 
             <Link href="/" className="flex items-center">
               <img
                 src={logoUrl}
-                alt="DGR Diamond Growth"
+                alt="Diamond Growth"
                 style={{ height: `${logoHeight}px`, width: 'auto' }}
               />
             </Link>
@@ -59,7 +78,7 @@ export default function ClientHeader({ logoUrl = "/logo.png", logoHeight = "48" 
                           {item.subItems?.map((subItem) => (
                             <Link
                               key={subItem.name}
-                              href={subItem.href}
+                              href={subItem.href || "#"}
                               className="block px-4 py-2 text-[#0D2240] hover:text-[#C4D600] hover:bg-gray-50 transition-colors"
                             >
                               {subItem.name}
@@ -77,19 +96,35 @@ export default function ClientHeader({ logoUrl = "/logo.png", logoHeight = "48" 
               ))}
             </nav>
 
-            {/* Contact Button Only */}
+            {/* Actions */}
             <div className="hidden md:flex items-center gap-x-4 pr-8">
+              <button 
+                onClick={toggleLanguage}
+                className="flex items-center text-[#0D2240] hover:text-[#C4D600] font-bold px-2 py-1 border-2 border-transparent hover:border-[#C4D600] rounded transition-all"
+              >
+                <Globe className="w-5 h-5 mx-1" />
+                {locale === 'ar' ? 'EN' : 'عربي'}
+              </button>
+
               <Link href="/contact">
                 <Button className="bg-[#C4D600] hover:bg-[#b3c200] text-[#0D2240] font-medium px-8">
-                  تواصل معنا
+                  {t("contact")}
                 </Button>
               </Link>
             </div>
 
             {/* Mobile Menu Button */}
-            <button className="lg:hidden p-2" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-              {isMenuOpen ? <X className="w-6 h-6 text-[#0D2240]" /> : <Menu className="w-6 h-6 text-[#0D2240]" />}
-            </button>
+            <div className="flex items-center gap-4 lg:hidden">
+              <button 
+                onClick={toggleLanguage}
+                className="flex items-center text-[#0D2240] hover:text-[#C4D600] font-bold"
+              >
+                {locale === 'ar' ? 'EN' : 'AR'}
+              </button>
+              <button className="p-2" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+                {isMenuOpen ? <X className="w-6 h-6 text-[#0D2240]" /> : <Menu className="w-6 h-6 text-[#0D2240]" />}
+              </button>
+            </div>
           </div>
 
           {/* Mobile Navigation */}
@@ -112,7 +147,7 @@ export default function ClientHeader({ logoUrl = "/logo.png", logoHeight = "48" 
                             {item.subItems?.map((subItem) => (
                               <Link
                                 key={subItem.name}
-                                href={subItem.href}
+                                href={subItem.href || "#"}
                                 className="block text-[#2D3640] hover:text-[#C4D600] transition-colors text-sm"
                                 onClick={() => setIsMenuOpen(false)}
                               >
@@ -137,7 +172,7 @@ export default function ClientHeader({ logoUrl = "/logo.png", logoHeight = "48" 
                 <div className="pt-4 border-t">
                   <Link href="/contact" onClick={() => setIsMenuOpen(false)}>
                     <Button className="w-full bg-[#C4D600] hover:bg-[#b3c200] text-[#0D2240] font-medium">
-                      تواصل معنا
+                      {t("contact")}
                     </Button>
                   </Link>
                 </div>

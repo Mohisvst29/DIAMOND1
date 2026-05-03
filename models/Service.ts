@@ -2,8 +2,11 @@ import mongoose, { Schema, Document, Model } from "mongoose"
 
 export interface IService extends Document {
     title: string
+    titleEn?: string
     description: string
+    descriptionEn?: string
     details: string
+    detailsEn?: string
     href: string
     icon: string
     image: string
@@ -18,8 +21,11 @@ export interface IService extends Document {
 const ServiceSchema = new Schema<IService>(
     {
         title: { type: String, required: true },
+        titleEn: { type: String },
         description: { type: String, required: true },
+        descriptionEn: { type: String },
         details: { type: String, required: true },
+        detailsEn: { type: String },
         href: { type: String, required: true },
         icon: { type: String, required: true },
         image: { type: String },
@@ -34,3 +40,4 @@ const ServiceSchema = new Schema<IService>(
 const Service: Model<IService> = mongoose.models.Service || mongoose.model<IService>("Service", ServiceSchema)
 
 export default Service
+

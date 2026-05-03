@@ -1,108 +1,110 @@
-import Link from "next/link"
-import { signOut } from "@/lib/auth"
-import { Button } from "@/components/ui/button"
-import {
-    LayoutDashboard,
-    FileText,
-    Image as ImageIcon,
-    Settings,
-    LogOut,
-    Building2,
-    Wrench,
-    Menu,
-    X,
-    FolderOpen,
-    User,
-    Link as LinkIcon
+"use client"
+
+import { useState } from "react"
+import { Link } from "@/navigation"
+import { usePathname, useRouter } from "next/navigation"
+import { 
+  LayoutDashboard, 
+  Settings, 
+  Briefcase, 
+  Image as ImageIcon, 
+  Users, 
+  FileText, 
+  LogOut,
+  Menu,
+  X
 } from "lucide-react"
+import { Toaster } from "sonner"
 
-export default function AdminLayout({
-    children,
-}: {
-    children: React.ReactNode
-}) {
-    return (
-        <div className="flex min-h-screen w-full bg-[#F5F5F7]">
-            {/* Sidebar */}
-            <aside className="fixed inset-y-0 right-0 z-50 hidden w-72 flex-col bg-[#0D2240] text-white shadow-xl lg:flex">
-                <div className="flex h-20 items-center px-6 border-b border-white/10">
-                    <Link href="/admin" className="flex items-center gap-3">
-                        <div className="bg-[#C4D600] rounded-lg p-2">
-                            <LayoutDashboard className="h-6 w-6 text-[#0D2240]" />
-                        </div>
-                        <div>
-                            <span className="block font-bold text-lg tracking-wide">لوحة التحكم</span>
-                            <span className="text-xs text-[#C4D600] opacity-80">DGR Diamond Growth</span>
-                        </div>
-                    </Link>
-                </div>
+const sidebarItems = [
+  { name: "الرئيسية", href: "/admin", icon: LayoutDashboard },
+  { name: "إعدادات الموقع", href: "/admin/settings", icon: Settings },
+  { name: "الخدمات", href: "/admin/services", icon: Briefcase },
+  { name: "معرض الأعمال", href: "/admin/portfolio", icon: ImageIcon },
+  { name: "فريق العمل", href: "/admin/team", icon: Users },
+  { name: "المدونة", href: "/admin/blog", icon: FileText },
+]
 
-                <div className="flex-1 overflow-auto py-6 px-4 space-y-1">
-                    <p className="px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">الرئيسية</p>
-                    <NavItem href="/admin" icon={LayoutDashboard} label="لوحة التحكم" />
+export default function AdminLayout({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname()
+  const router = useRouter()
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
 
-                    <p className="px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider mt-6 mb-2">المحتوى</p>
-                    <NavItem href="/admin/projects" icon={Building2} label="المشاريع" />
-                    <NavItem href="/admin/services" icon={Wrench} label="الخدمات" />
-                    <NavItem href="/admin/blog" icon={FileText} label="المدونة" />
-                    <NavItem href="/admin/partners" icon={User} label="شركاء النجاح" />
-                    <NavItem href="/admin/internal-links" icon={LinkIcon} label="الروابط الداخلية" />
-                    <NavItem href="/admin/media" icon={ImageIcon} label="مكتبة الوسائط" />
-                    <NavItem href="/admin/content" icon={Settings} label="محتوى الموقع" />
-                </div>
+  const handleLogout = async () => {
+    // Basic logout logic (will integrate properly with next-auth or custom API later)
+    document.cookie = "admin-auth=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
+    router.push("/admin/login")
+  }
 
-                <div className="p-4 border-t border-white/10 bg-[#0A1B33]">
-                    <div className="flex items-center gap-3 mb-4 px-2">
-                        <div className="h-10 w-10 rounded-full bg-white/10 flex items-center justify-center">
-                            <User className="h-5 w-5 text-[#C4D600]" />
-                        </div>
-                        <div>
-                            <p className="text-sm font-medium">المدير العام</p>
-                            <p className="text-xs text-gray-400">admin@admin.com</p>
-                        </div>
-                    </div>
-                    <form
-                        action={async () => {
-                            "use server"
-                            await signOut()
-                        }}
-                    >
-                        <Button variant="destructive" className="w-full bg-red-500/10 hover:bg-red-500/20 text-red-500 border-0 justify-start" size="sm">
-                            <LogOut className="mr-2 h-4 w-4 ml-2" />
-                            تسجيل خروج
-                        </Button>
-                    </form>
-                </div>
-            </aside>
+  return (
+    <div className="flex h-screen bg-gray-100" dir="rtl">
+      {/* Mobile Sidebar Overlay */}
+      {isSidebarOpen && (
+        <div 
+          className="fixed inset-0 bg-black/50 z-40 md:hidden"
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
 
-            {/* Main Content */}
-            <div className="flex flex-1 flex-col lg:pr-72 transition-all duration-300">
-                <header className="sticky top-0 z-40 flex h-20 items-center justify-between gap-4 border-b bg-white/80 px-6 backdrop-blur-sm shadow-sm lg:hidden">
-                    <Link href="/admin" className="flex items-center gap-2 font-semibold">
-                        <LayoutDashboard className="h-6 w-6 text-[#0D2240]" />
-                        <span className="text-[#0D2240]">لوحة التحكم</span>
-                    </Link>
-                    {/* Mobile menu trigger would go here - for now rely on desktop first design */}
-                </header>
-
-                <main className="flex-1 p-8 overflow-x-hidden">
-                    <div className="mx-auto max-w-7xl animate-fade-in">
-                        {children}
-                    </div>
-                </main>
-            </div>
+      {/* Sidebar */}
+      <div className={`fixed inset-y-0 right-0 z-50 w-64 bg-white border-l shadow-lg transform transition-transform duration-300 md:relative md:translate-x-0 ${isSidebarOpen ? "translate-x-0" : "translate-x-full"}`}>
+        <div className="flex items-center justify-between h-16 px-6 border-b">
+          <h1 className="text-xl font-bold text-slate-800">لوحة التحكم</h1>
+          <button className="md:hidden" onClick={() => setIsSidebarOpen(false)}>
+            <X className="w-6 h-6 text-gray-500" />
+          </button>
         </div>
-    )
-}
+        <nav className="p-4 space-y-2 overflow-y-auto h-[calc(100vh-4rem)]">
+          {sidebarItems.map((item) => {
+            const Icon = item.icon
+            const isActive = pathname === item.href || (item.href !== "/admin" && pathname.startsWith(item.href))
+            return (
+              <Link
+                key={item.name}
+                href={item.href}
+                className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
+                  isActive 
+                    ? "bg-slate-800 text-white" 
+                    : "text-slate-600 hover:bg-slate-100"
+                }`}
+                onClick={() => setIsSidebarOpen(false)}
+              >
+                <Icon className="w-5 h-5" />
+                <span className="font-medium">{item.name}</span>
+              </Link>
+            )
+          })}
+          <button
+            onClick={handleLogout}
+            className="flex items-center gap-3 px-4 py-3 rounded-lg transition-colors text-red-600 hover:bg-red-50 w-full text-right mt-8"
+          >
+            <LogOut className="w-5 h-5" />
+            <span className="font-medium">تسجيل الخروج</span>
+          </button>
+        </nav>
+      </div>
 
-function NavItem({ href, icon: Icon, label }: { href: string; icon: any; label: string }) {
-    return (
-        <Link
-            href={href}
-            className="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-gray-300 transition-all hover:bg-white/10 hover:text-white hover:-translate-x-1 group"
-        >
-            <Icon className="h-5 w-5 text-gray-400 group-hover:text-[#C4D600] transition-colors" />
-            {label}
-        </Link>
-    )
+      {/* Main Content */}
+      <div className="flex-1 flex flex-col h-screen overflow-hidden">
+        {/* Top Header */}
+        <header className="flex items-center justify-between h-16 px-6 bg-white border-b shadow-sm">
+          <button className="md:hidden" onClick={() => setIsSidebarOpen(true)}>
+            <Menu className="w-6 h-6 text-slate-600" />
+          </button>
+          <div className="flex items-center gap-4">
+            <span className="text-sm font-medium text-slate-600">أهلاً بك، المدير العام</span>
+            <div className="w-8 h-8 rounded-full bg-slate-800 text-white flex items-center justify-center font-bold">
+              A
+            </div>
+          </div>
+        </header>
+
+        {/* Content */}
+        <main className="flex-1 overflow-y-auto p-6 bg-slate-50">
+          {children}
+        </main>
+      </div>
+      <Toaster richColors position="top-center" />
+    </div>
+  )
 }

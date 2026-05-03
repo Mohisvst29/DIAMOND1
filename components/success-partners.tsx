@@ -3,31 +3,8 @@
 import { useEffect, useState } from "react"
 import Image from "next/image"
 
-type Partner = {
-  _id: string
-  name: string
-  logoUrl: string
-}
-
-export default function SuccessPartners() {
-  const [partners, setPartners] = useState<Partner[]>([])
-
-  useEffect(() => {
-    // Attempt to fetch from API
-    fetch("/api/partners")
-      .then(res => res.json())
-      .then(data => {
-        if (Array.isArray(data) && data.length > 0) {
-          setPartners(data)
-        } else {
-          // Fallback to empty if nothing in DB or error
-          setPartners([])
-        }
-      })
-      .catch(() => {
-        // Silent catch
-      })
-  }, [])
+export default function SuccessPartners({ settings }: { settings?: any }) {
+  const partners = settings?.partners || []
 
   if (partners.length === 0) return null
 
@@ -41,11 +18,11 @@ export default function SuccessPartners() {
 
       <div className="relative flex overflow-x-hidden group">
         <div className="animate-marquee whitespace-nowrap flex items-center">
-          {[...partners, ...partners, ...partners].map((partner, i) => (
-            <div key={`${partner._id}-${i}`} className="mx-8 w-40 h-20 relative grayscale hover:grayscale-0 transition-all duration-300">
+          {[...partners, ...partners, ...partners].map((logoUrl: string, i: number) => (
+            <div key={i} className="mx-8 w-40 h-20 relative grayscale hover:grayscale-0 transition-all duration-300">
               <Image 
-                src={partner.logoUrl} 
-                alt={partner.name} 
+                src={logoUrl} 
+                alt="شريك نجاح" 
                 fill 
                 className="object-contain"
               />

@@ -23,10 +23,10 @@ export default function ContactForm({ whatsappPhone = "+966536788004" }: { whats
     e.preventDefault()
 
     // Format phone for WhatsApp by removing non-digits
-    const whatsappNumber = whatsappPhone.replace(/[^\d+]/g, '')
+    const whatsappNumber = (whatsappPhone || "+966536788004").replace(/[^\d+]/g, '')
 
     const text = `
-طلب خدمة من موقع DGR Diamond Growth
+طلب خدمة من موقع Diamond Growth
 الاسم: ${formData.name}
 الهاتف: ${formData.phone}
 البريد: ${formData.email}

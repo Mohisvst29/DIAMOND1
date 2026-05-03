@@ -1,6 +1,6 @@
 import Image from "next/image"
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb"
-import Link from "next/link"
+import { Link } from "@/navigation"
 import { CheckCircle, Star, ArrowRight } from "lucide-react"
 
 type ServiceDetailProps = {

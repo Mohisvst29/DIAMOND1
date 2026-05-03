@@ -19,14 +19,7 @@ export default function HeroSlider({ slides }: HeroSliderProps) {
   const [currentSlide, setCurrentSlide] = useState(0)
 
   // Use effective slides or fallback if empty
-  const effectiveSlides = slides && slides.length > 0 ? slides : [
-    {
-      id: 'default',
-      image: '/placeholder.svg',
-      title: 'Welcome',
-      subtitle: 'Please add slides in Admin -> Site Content'
-    }
-  ]
+  const effectiveSlides = slides && slides.length > 0 ? slides : []
 
   useEffect(() => {
     if (effectiveSlides.length <= 1) return

@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import Link from "next/link"
+import { Link } from "@/navigation"
 import { ArrowLeft, Building, Wrench, Palette, Settings, Zap, Hammer, RefreshCw, Bold, Sparkles, Shield, Truck, Home } from "lucide-react"
 
 // Map icon names to components
@@ -40,7 +40,9 @@ const categories = [
   { id: "all", name: "جميع الخدمات" },
 ]
 
-export default function ServicesGrid({ services }: ServicesGridProps) {
+export default function ServicesGrid({ services = [] }: { services?: Service[] }) {
+  const locale = useLocale()
+  const t = useTranslations("Common")
   const [activeCategory, setActiveCategory] = useState("all")
   const [hoveredService, setHoveredService] = useState<string | null>(null)
 
@@ -75,7 +77,13 @@ export default function ServicesGrid({ services }: ServicesGridProps) {
                 onMouseLeave={() => setHoveredService(null)}
               >
                 <div className="relative overflow-hidden">
-                  <div className="bg-gradient-to-br from-[#0D2240] to-[#1a3a5c] h-56 w-full flex items-center justify-center relative">
+                  <div 
+                    className="bg-gradient-to-br from-[#0D2240] to-[#1a3a5c] h-56 w-full flex items-center justify-center relative bg-cover bg-center"
+                    style={service.image ? { backgroundImage: `url(${service.image})` } : {}}
+                  >
+                    {/* Add an overlay if there is an image */}
+                    {service.image && <div className="absolute inset-0 bg-[#0D2240]/60 mix-blend-multiply transition-opacity duration-300 group-hover:opacity-80"></div>}
+
                     {/* Animated background pattern */}
                     <div className="absolute inset-0 opacity-10">
                       <div className="absolute top-0 left-0 w-full h-full bg-white/20 transform rotate-45 translate-x-full group-hover:translate-x-0 transition-transform duration-700"></div>
@@ -83,7 +91,7 @@ export default function ServicesGrid({ services }: ServicesGridProps) {
                     
                     {/* Icon */}
                     <div className={`relative z-10 transition-all duration-300 ${hoveredService === service._id ? 'scale-110' : ''}`}>
-                      <div className="bg-white/20 backdrop-blur-sm p-6 rounded-2xl border border-white/30">
+                      <div className="bg-white/20 backdrop-blur-sm p-6 rounded-2xl border border-white/30 shadow-lg">
                         <IconComponent className="w-16 h-16 text-white" />
                       </div>
                     </div>
@@ -106,17 +114,21 @@ export default function ServicesGrid({ services }: ServicesGridProps) {
 
                 <div className="p-8 bg-white">
                   <div className="flex items-start justify-between mb-4">
-                    <h3 className="text-xl font-bold text-[#0D2240] group-hover:text-[#C4D600] transition-colors">
-                      {service.title}
+                    <h3 className="text-xl font-bold text-[#0D2240] mb-3 group-hover:text-[#C4D600] transition-colors">
+                      {locale === 'en' && service.titleEn ? service.titleEn : service.title}
                     </h3>
-                    <div className="bg-[#C4D600]/10 p-2 rounded-lg">
-                      <Shield className="w-4 h-4 text-[#C4D600]" />
-                    </div>
                   </div>
                   
-                  <p className="text-[#2D3640] mb-6 leading-relaxed">
-                    {service.description}
+                  <p className="text-gray-600 mb-6 line-clamp-3">
+                    {locale === 'en' && service.descriptionEn ? service.descriptionEn : service.description}
                   </p>
+
+                  <Link href={service.href || "#"}>
+                    <span className="inline-flex items-center text-[#0D2240] font-medium group-hover:text-[#C4D600] transition-colors mt-auto mb-6">
+                      {t("readMore")}
+                      <ArrowUpRight className={`w-4 h-4 transition-transform group-hover:-translate-y-1 ${locale === 'ar' ? 'mr-2 -scale-x-100 group-hover:-translate-x-1' : 'ml-2 group-hover:translate-x-1'}`} />
+                    </span>
+                  </Link>
 
                   {/* Quick features preview */}
                   {service.features && service.features.length > 0 && (

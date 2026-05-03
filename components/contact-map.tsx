@@ -1,14 +1,17 @@
 import { MapPin, Clock, Phone } from "lucide-react"
 import connectDB from "@/lib/db"
-import SiteContent from "@/models/SiteContent"
+import SiteSettings from "@/models/SiteSettings"
 
 export default async function ContactMap() {
   let location = "طريق الملك عبدالعزيز، السعودية"
+  let mapSrc = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d115865.07156942732!2d46.7760775!3d24.8329623!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e2efce944b4e7cb%3A0x2863773a90623a85!2sKing%20Abdul%20Aziz%20Road%2C%20Riyadh!5e0!3m2!1sen!2ssa!4v1715011234567!5m2!1sen!2ssa"
+
   try {
     const db = await connectDB()
     if (db) {
-      const doc = await SiteContent.findOne({ key: 'contact_location' }).lean()
-      if (doc && doc.value) location = doc.value as string
+      const settings = await SiteSettings.findOne({}).lean()
+      if (settings?.contact?.addresses?.length > 0) location = settings.contact.addresses.join("، ")
+      if (settings?.contact?.mapLinks?.length > 0) mapSrc = settings.contact.mapLinks[0]
     }
   } catch (e) {}
 
@@ -27,20 +30,20 @@ export default async function ContactMap() {
         <div className="relative rounded-lg overflow-hidden shadow-lg">
           <div className="aspect-video bg-gray-200 flex items-center justify-center">
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d115865.07156942732!2d46.7760775!3d24.8329623!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e2efce944b4e7cb%3A0x2863773a90623a85!2sKing%20Abdul%20Aziz%20Road%2C%20Riyadh!5e0!3m2!1sen!2ssa!4v1715011234567!5m2!1sen!2ssa"
+              src={mapSrc}
               width="100%"
               height="100%"
               style={{ border: 0 }}
               allowFullScreen
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
-              title="موقع DGR Diamond Growth"
+              title="موقع Diamond Growth"
             />
           </div>
 
           {/* بطاقة فوق الخريطة */}
           <div className="absolute top-6 right-6 bg-white p-4 rounded-lg shadow-lg max-w-sm">
-            <h3 className="font-bold text-[#0D2240] mb-2">شركة DGR Diamond Growth</h3>
+            <h3 className="font-bold text-[#0D2240] mb-2">شركة Diamond Growth</h3>
             <p className="text-sm text-[#2D3640] mb-3">
               {location.split('،').map((part, index) => (
                 <span key={index}>{part}{index < location.split('،').length - 1 && '،'}<br /></span>

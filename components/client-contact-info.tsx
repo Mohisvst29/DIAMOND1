@@ -55,7 +55,7 @@ export default function ClientContactInfo({
   email?: string, phone?: string, location?: string,
   facebook?: string, twitter?: string, instagram?: string, linkedin?: string, snapchat?: string, tiktok?: string
 }) {
-  const waPhone = phone.replace(/[^\d+]/g, '')
+  const waPhone = (phone || "+966536788004").replace(/[^\d+]/g, '')
 
   const contactMethods = [
     {

@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import Link from "next/link"
+import { Link } from "@/navigation"
 import { ArrowLeft, MapPin, Ruler, Eye, Filter } from "lucide-react"
 
 interface Project {
@@ -114,7 +114,7 @@ export default function ProjectsGallery({ projects }: ProjectsGalleryProps) {
                 <img
                   src={
                     project.image ||
-                    `/placeholder.svg?height=300&width=400&query=${project.title || "/placeholder.svg"} construction project`
+                    ""
                   }
                   alt={project.title}
                   className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-700"

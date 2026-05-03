@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import Link from "next/link"
+import { Link } from "@/navigation"
 import { ArrowLeft, Calendar, Clock, User } from "lucide-react"
 
 const blogPosts = [
@@ -33,7 +33,7 @@ const blogPosts = [
     slug: "sustainable-construction",
     title: "البناء المستدام: المستقبل الأخضر للمقاولات",
     excerpt: "كيف تساهم تقنيات البناء المستدام في حماية البيئة وتوفير التكاليف على المدى الطويل",
-    author: "DGR Diamond Growth",
+    author: "Diamond Growth",
     publishDate: "2024-01-05",
     readTime: "6 دقائق",
     category: "الاستدامة",
@@ -127,7 +127,7 @@ export default function BlogListing() {
                 <img
                   src={
                     post.image ||
-                    `/placeholder.svg?height=250&width=400&query=${post.title || "/placeholder.svg"} blog post image`
+                    ""
                   }
                   alt={post.title}
                   className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"

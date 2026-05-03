@@ -4,7 +4,7 @@ import { useState } from "react"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { CheckCircle, ArrowLeft, MessageCircle, MapPin, Calendar, Ruler, Clock, Image as ImageIcon } from "lucide-react"
-import Link from "next/link"
+import { Link } from "@/navigation"
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb"
 
 interface ProjectDetailProps {
@@ -38,7 +38,7 @@ export default function ProjectDetail({ project }: ProjectDetailProps) {
     ? [project.image, ...project.images].filter(Boolean)
     : project.image 
     ? [project.image]
-    : [`/placeholder.svg?height=600&width=1200&query=${encodeURIComponent(project.title)} project banner`]
+    : []
 
   return (
     <>
@@ -46,7 +46,7 @@ export default function ProjectDetail({ project }: ProjectDetailProps) {
       <section className="relative py-32 overflow-hidden">
         <div className="absolute inset-0">
           <img
-            src={allImages[0] || `/placeholder.svg?height=600&width=1200&query=${encodeURIComponent(project.title)} project banner`}
+            src={allImages[0] || ""}
             alt={project.title}
             className="w-full h-full object-cover"
           />
@@ -88,7 +88,7 @@ export default function ProjectDetail({ project }: ProjectDetailProps) {
             <div className="lg:col-span-2">
               <div className="relative mb-6">
                 <img
-                  src={allImages[activeImage] || `/placeholder.svg?height=500&width=800&query=${encodeURIComponent(project.title)} main view`}
+                  src={allImages[activeImage] || ""}
                   alt={project.title}
                   className="w-full h-96 object-cover rounded-lg shadow-lg"
                 />
@@ -109,7 +109,7 @@ export default function ProjectDetail({ project }: ProjectDetailProps) {
                       className={`relative rounded-lg overflow-hidden transition-all ${activeImage === index ? "ring-2 ring-[#C4D600] scale-105" : "hover:scale-105"}`}
                     >
                       <img
-                        src={image || `/placeholder.svg?height=150&width=200&query=${encodeURIComponent(project.title)} view ${index + 1}`}
+                        src={image || ""}
                         alt={`${project.title} - صورة ${index + 1}`}
                         className="w-full h-20 object-cover"
                       />
