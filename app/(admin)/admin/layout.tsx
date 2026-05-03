@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Link } from "@/navigation"
+import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import { 
   LayoutDashboard, 
