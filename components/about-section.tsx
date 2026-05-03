@@ -93,7 +93,7 @@ export default function AboutSection({ settings }: { settings?: any }) {
           </div>
 
           <div
-            className={`grid grid-cols-2 gap-4 transition-all duration-800 delay-400 ${
+            className={`grid grid-cols-1 sm:grid-cols-2 gap-4 transition-all duration-800 delay-400 ${
               isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-[50px]"
             }`}
           >

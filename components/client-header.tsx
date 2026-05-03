@@ -129,8 +129,8 @@ export default function ClientHeader({ logoUrl = "/logo.png", logoHeight = "48",
 
           {/* Mobile Navigation */}
           {isMenuOpen && (
-            <div className="lg:hidden py-4 border-t bg-white">
-              <nav className="flex flex-col space-y-4">
+            <div className="lg:hidden py-4 border-t bg-white max-h-[calc(100vh-80px)] overflow-y-auto">
+              <nav className="flex flex-col space-y-4 px-4">
                 {navigation.map((item) => (
                   <div key={item.name}>
                     {item.hasDropdown ? (
