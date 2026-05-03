@@ -119,7 +119,7 @@ export default function SettingsPage() {
                   <div className="grid md:grid-cols-2 gap-4 mt-4">
                     <div className="space-y-4">
                       <div className="space-y-2">
-                        <Label>العنوان الرئيسي</Label>
+                        <Label>العنوان الرئيسي (بالعربية)</Label>
                         <Input value={slide.title} onChange={e => {
                           const newHero = [...settings.hero];
                           newHero[index].title = e.target.value;
@@ -127,10 +127,26 @@ export default function SettingsPage() {
                         }} />
                       </div>
                       <div className="space-y-2">
-                        <Label>النص الفرعي</Label>
+                        <Label>العنوان الرئيسي (بالإنجليزية)</Label>
+                        <Input value={slide.titleEn || ''} onChange={e => {
+                          const newHero = [...settings.hero];
+                          newHero[index].titleEn = e.target.value;
+                          setSettings({...settings, hero: newHero});
+                        }} />
+                      </div>
+                      <div className="space-y-2">
+                        <Label>النص الفرعي (بالعربية)</Label>
                         <Textarea value={slide.subtitle} onChange={e => {
                           const newHero = [...settings.hero];
                           newHero[index].subtitle = e.target.value;
+                          setSettings({...settings, hero: newHero});
+                        }} />
+                      </div>
+                      <div className="space-y-2">
+                        <Label>النص الفرعي (بالإنجليزية)</Label>
+                        <Textarea value={slide.subtitleEn || ''} onChange={e => {
+                          const newHero = [...settings.hero];
+                          newHero[index].subtitleEn = e.target.value;
                           setSettings({...settings, hero: newHero});
                         }} />
                       </div>
@@ -209,25 +225,45 @@ export default function SettingsPage() {
             <CardHeader><CardTitle>محتوى "من نحن"</CardTitle></CardHeader>
             <CardContent className="space-y-6">
               <div className="space-y-2">
-                <Label>نص موجز للرئيسية</Label>
+                <Label>نص موجز للرئيسية (بالعربية)</Label>
                 <Textarea className="min-h-[100px]" value={settings.home?.aboutSummary || ''} onChange={e => setSettings({...settings, home: {...settings.home, aboutSummary: e.target.value}})} />
               </div>
               <div className="space-y-2">
-                <Label>الوصف الكامل لصفحة من نحن</Label>
+                <Label>نص موجز للرئيسية (بالإنجليزية)</Label>
+                <Textarea className="min-h-[100px]" value={settings.home?.aboutSummaryEn || ''} onChange={e => setSettings({...settings, home: {...settings.home, aboutSummaryEn: e.target.value}})} />
+              </div>
+              <div className="space-y-2">
+                <Label>الوصف الكامل لصفحة من نحن (بالعربية)</Label>
                 <Textarea className="min-h-[150px]" value={settings.about?.content || ''} onChange={e => setSettings({...settings, about: {...settings.about, content: e.target.value}})} />
+              </div>
+              <div className="space-y-2">
+                <Label>الوصف الكامل لصفحة من نحن (بالإنجليزية)</Label>
+                <Textarea className="min-h-[150px]" value={settings.about?.contentEn || ''} onChange={e => setSettings({...settings, about: {...settings.about, contentEn: e.target.value}})} />
               </div>
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label>رؤيتنا</Label>
+                  <Label>رؤيتنا (بالعربية)</Label>
                   <Textarea value={settings.about?.vision || ''} onChange={e => setSettings({...settings, about: {...settings.about, vision: e.target.value}})} />
                 </div>
                 <div className="space-y-2">
-                  <Label>رسالتنا</Label>
+                  <Label>رؤيتنا (بالإنجليزية)</Label>
+                  <Textarea value={settings.about?.visionEn || ''} onChange={e => setSettings({...settings, about: {...settings.about, visionEn: e.target.value}})} />
+                </div>
+                <div className="space-y-2">
+                  <Label>رسالتنا (بالعربية)</Label>
                   <Textarea value={settings.about?.mission || ''} onChange={e => setSettings({...settings, about: {...settings.about, mission: e.target.value}})} />
                 </div>
-                <div className="space-y-2 col-span-2">
-                  <Label>أهدافنا</Label>
+                <div className="space-y-2">
+                  <Label>رسالتنا (بالإنجليزية)</Label>
+                  <Textarea value={settings.about?.missionEn || ''} onChange={e => setSettings({...settings, about: {...settings.about, missionEn: e.target.value}})} />
+                </div>
+                <div className="space-y-2">
+                  <Label>أهدافنا (بالعربية)</Label>
                   <Textarea value={settings.about?.goals || ''} onChange={e => setSettings({...settings, about: {...settings.about, goals: e.target.value}})} />
+                </div>
+                <div className="space-y-2">
+                  <Label>أهدافنا (بالإنجليزية)</Label>
+                  <Textarea value={settings.about?.goalsEn || ''} onChange={e => setSettings({...settings, about: {...settings.about, goalsEn: e.target.value}})} />
                 </div>
               </div>
               <div className="space-y-4">
@@ -385,7 +421,7 @@ export default function SettingsPage() {
                   <div className="grid md:grid-cols-2 gap-4 mt-4">
                     <div className="space-y-4">
                       <div className="space-y-2">
-                        <Label>الاسم</Label>
+                        <Label>الاسم (بالعربية)</Label>
                         <Input value={member.name} onChange={e => {
                           const newTeam = [...settings.team];
                           newTeam[index].name = e.target.value;
@@ -393,7 +429,15 @@ export default function SettingsPage() {
                         }} />
                       </div>
                       <div className="space-y-2">
-                        <Label>المسمى الوظيفي</Label>
+                        <Label>الاسم (بالإنجليزية)</Label>
+                        <Input value={member.nameEn || ''} onChange={e => {
+                          const newTeam = [...settings.team];
+                          newTeam[index].nameEn = e.target.value;
+                          setSettings({...settings, team: newTeam});
+                        }} />
+                      </div>
+                      <div className="space-y-2">
+                        <Label>المسمى الوظيفي (بالعربية)</Label>
                         <Input value={member.position} onChange={e => {
                           const newTeam = [...settings.team];
                           newTeam[index].position = e.target.value;
@@ -401,10 +445,26 @@ export default function SettingsPage() {
                         }} />
                       </div>
                       <div className="space-y-2">
-                        <Label>الوصف</Label>
+                        <Label>المسمى الوظيفي (بالإنجليزية)</Label>
+                        <Input value={member.positionEn || ''} onChange={e => {
+                          const newTeam = [...settings.team];
+                          newTeam[index].positionEn = e.target.value;
+                          setSettings({...settings, team: newTeam});
+                        }} />
+                      </div>
+                      <div className="space-y-2">
+                        <Label>الوصف (بالعربية)</Label>
                         <Textarea value={member.description} onChange={e => {
                           const newTeam = [...settings.team];
                           newTeam[index].description = e.target.value;
+                          setSettings({...settings, team: newTeam});
+                        }} />
+                      </div>
+                      <div className="space-y-2">
+                        <Label>الوصف (بالإنجليزية)</Label>
+                        <Textarea value={member.descriptionEn || ''} onChange={e => {
+                          const newTeam = [...settings.team];
+                          newTeam[index].descriptionEn = e.target.value;
                           setSettings({...settings, team: newTeam});
                         }} />
                       </div>
@@ -509,24 +569,45 @@ export default function SettingsPage() {
             <CardHeader><CardTitle>إعدادات محركات البحث</CardTitle></CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-2">
-                <Label>عنوان الموقع (Title)</Label>
+                <Label>عنوان الموقع (Title) - بالعربية</Label>
                 <Input 
                   value={settings.seo?.title || ''} 
                   onChange={e => setSettings({...settings, seo: {...settings.seo, title: e.target.value}})} 
                 />
               </div>
               <div className="space-y-2">
-                <Label>وصف الموقع (Description)</Label>
+                <Label>عنوان الموقع (Title) - بالإنجليزية</Label>
+                <Input 
+                  value={settings.seo?.titleEn || ''} 
+                  onChange={e => setSettings({...settings, seo: {...settings.seo, titleEn: e.target.value}})} 
+                />
+              </div>
+              <div className="space-y-2">
+                <Label>وصف الموقع (Description) - بالعربية</Label>
                 <Textarea 
                   value={settings.seo?.description || ''} 
                   onChange={e => setSettings({...settings, seo: {...settings.seo, description: e.target.value}})} 
                 />
               </div>
               <div className="space-y-2">
-                <Label>الكلمات المفتاحية (Keywords)</Label>
+                <Label>وصف الموقع (Description) - بالإنجليزية</Label>
+                <Textarea 
+                  value={settings.seo?.descriptionEn || ''} 
+                  onChange={e => setSettings({...settings, seo: {...settings.seo, descriptionEn: e.target.value}})} 
+                />
+              </div>
+              <div className="space-y-2">
+                <Label>الكلمات المفتاحية (Keywords) - بالعربية</Label>
                 <Textarea 
                   value={settings.seo?.keywords || ''} 
                   onChange={e => setSettings({...settings, seo: {...settings.seo, keywords: e.target.value}})} 
+                />
+              </div>
+              <div className="space-y-2">
+                <Label>الكلمات المفتاحية (Keywords) - بالإنجليزية</Label>
+                <Textarea 
+                  value={settings.seo?.keywordsEn || ''} 
+                  onChange={e => setSettings({...settings, seo: {...settings.seo, keywordsEn: e.target.value}})} 
                 />
               </div>
             </CardContent>

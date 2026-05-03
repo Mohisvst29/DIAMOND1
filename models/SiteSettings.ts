@@ -4,8 +4,11 @@ export interface ISiteSettings extends Document {
   // Global SEO
   seo: {
     title: string;
+    titleEn?: string;
     description: string;
+    descriptionEn?: string;
     keywords: string;
+    keywordsEn?: string;
   };
   // Logo
   logo: {
@@ -24,19 +27,26 @@ export interface ISiteSettings extends Document {
   hero: {
     image: string;
     title: string;
+    titleEn?: string;
     subtitle: string;
+    subtitleEn?: string;
   }[];
   // About Us Page Data
   about: {
     images: string[];
     content: string;
+    contentEn?: string;
     vision: string;
+    visionEn?: string;
     mission: string;
+    missionEn?: string;
     goals: string;
+    goalsEn?: string;
   };
   // Home Page Summaries
   home: {
     aboutSummary: string;
+    aboutSummaryEn?: string;
   };
   // Covers for various pages
   covers: {
@@ -52,6 +62,7 @@ export interface ISiteSettings extends Document {
     whatsapps: string[];
     emails: string[];
     addresses: string[];
+    addressesEn?: string[];
     mapLinks: string[];
   };
   // Social Media
@@ -67,9 +78,12 @@ export interface ISiteSettings extends Document {
   // Team Members
   team: {
     name: string;
+    nameEn?: string;
     position: string;
+    positionEn?: string;
     image: string;
     description: string;
+    descriptionEn?: string;
   }[];
   // Achievements
   achievements: {
@@ -83,8 +97,11 @@ export interface ISiteSettings extends Document {
 const SiteSettingsSchema = new Schema<ISiteSettings>({
   seo: {
     title: { type: String, default: 'Diamond Growth' },
+    titleEn: { type: String, default: 'Diamond Growth' },
     description: { type: String, default: '' },
+    descriptionEn: { type: String, default: '' },
     keywords: { type: String, default: '' },
+    keywordsEn: { type: String, default: '' },
   },
   logo: {
     url: { type: String, default: '/logo.png' },
@@ -100,17 +117,24 @@ const SiteSettingsSchema = new Schema<ISiteSettings>({
   hero: [{
     image: { type: String },
     title: { type: String },
+    titleEn: { type: String },
     subtitle: { type: String },
+    subtitleEn: { type: String },
   }],
   about: {
     images: [{ type: String }],
     content: { type: String, default: '' },
+    contentEn: { type: String, default: '' },
     vision: { type: String, default: '' },
+    visionEn: { type: String, default: '' },
     mission: { type: String, default: '' },
+    missionEn: { type: String, default: '' },
     goals: { type: String, default: '' },
+    goalsEn: { type: String, default: '' },
   },
   home: {
     aboutSummary: { type: String, default: '' },
+    aboutSummaryEn: { type: String, default: '' },
   },
   covers: {
     about: { type: String, default: '/default-cover.jpg' },
@@ -124,6 +148,7 @@ const SiteSettingsSchema = new Schema<ISiteSettings>({
     whatsapps: [{ type: String }],
     emails: [{ type: String }],
     addresses: [{ type: String }],
+    addressesEn: [{ type: String }],
     mapLinks: [{ type: String }],
   },
   social: {
@@ -136,9 +161,12 @@ const SiteSettingsSchema = new Schema<ISiteSettings>({
   partners: [{ type: String }],
   team: [{
     name: { type: String },
+    nameEn: { type: String },
     position: { type: String },
+    positionEn: { type: String },
     image: { type: String },
     description: { type: String },
+    descriptionEn: { type: String },
   }],
   achievements: {
     projectsCompleted: { type: Number, default: 100 },

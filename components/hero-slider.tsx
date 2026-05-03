@@ -3,12 +3,15 @@
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { ChevronLeft, ChevronRight } from "lucide-react"
+import { useLocale, useTranslations } from "next-intl"
 
 interface Slide {
   id: number | string
   image: string
   title: string
+  titleEn?: string
   subtitle: string
+  subtitleEn?: string
 }
 
 interface HeroSliderProps {
@@ -17,6 +20,8 @@ interface HeroSliderProps {
 
 export default function HeroSlider({ slides }: HeroSliderProps) {
   const [currentSlide, setCurrentSlide] = useState(0)
+  const locale = useLocale()
+  const t = useTranslations("Common")
 
   // Use effective slides or fallback if empty
   const effectiveSlides = slides && slides.length > 0 ? slides : []
@@ -59,13 +64,17 @@ export default function HeroSlider({ slides }: HeroSliderProps) {
       <div className="absolute inset-0 flex items-center justify-center">
         <div className="text-center text-white max-w-4xl px-4">
           <h1 className="text-4xl md:text-6xl font-bold mb-6 text-balance">
-            {effectiveSlides[currentSlide]?.title}
+            {locale === 'en' && effectiveSlides[currentSlide]?.titleEn 
+              ? effectiveSlides[currentSlide]?.titleEn 
+              : effectiveSlides[currentSlide]?.title}
           </h1>
           <p className="text-xl md:text-2xl mb-8 text-balance opacity-90">
-            {effectiveSlides[currentSlide]?.subtitle}
+            {locale === 'en' && effectiveSlides[currentSlide]?.subtitleEn 
+              ? effectiveSlides[currentSlide]?.subtitleEn 
+              : effectiveSlides[currentSlide]?.subtitle}
           </p>
           <Button size="lg" className="bg-[#C4D600] hover:bg-[#e6a61a] text-[#0D2240] font-bold text-lg px-8 py-3">
-            تواصل معنا الآن
+            {t("contactUs")}
           </Button>
         </div>
       </div>

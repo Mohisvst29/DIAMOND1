@@ -15,18 +15,8 @@ export default function PortfolioAdmin() {
   const [loading, setLoading] = useState(true)
   const [editingId, setEditingId] = useState<string | null>(null)
   
-  const [formData, setFormData] = useState({
-    title: "",
-    location: "",
-    category: "",
-    description: "",
-    area: "",
-    duration: "",
-    year: "",
-    image: "",
-    images: [] as string[],
-    services: [] as string[],
-    features: [] as string[]
+  const [formData, setFormData] = useState<Partial<any>>({
+    title: "", titleEn: "", location: "", locationEn: "", category: "", categoryEn: "", description: "", descriptionEn: "", area: "", areaEn: "", duration: "", durationEn: "", year: "", image: "", images: [], services: [], features: []
   })
 
   const fetchProjects = () => {
@@ -53,12 +43,12 @@ export default function PortfolioAdmin() {
 
   const handleEdit = (project: any) => {
     setFormData({
-      title: project.title,
-      location: project.location,
-      category: project.category,
-      description: project.description,
-      area: project.area,
-      duration: project.duration,
+      title: project.title, titleEn: project.titleEn,
+      location: project.location, locationEn: project.locationEn,
+      category: project.category, categoryEn: project.categoryEn,
+      description: project.description, descriptionEn: project.descriptionEn,
+      area: project.area, areaEn: project.areaEn,
+      duration: project.duration, durationEn: project.durationEn,
       year: project.year,
       image: project.image,
       images: project.images || [],
@@ -118,20 +108,36 @@ export default function PortfolioAdmin() {
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               <div className="space-y-2">
-                <Label>اسم المشروع</Label>
+                <Label>اسم المشروع (بالعربية)</Label>
                 <Input required value={formData.title} onChange={e => setFormData({...formData, title: e.target.value})} />
               </div>
               <div className="space-y-2">
-                <Label>القسم (Category)</Label>
+                <Label>اسم المشروع (بالإنجليزية)</Label>
+                <Input value={formData.titleEn || ''} onChange={e => setFormData({...formData, titleEn: e.target.value})} />
+              </div>
+              <div className="space-y-2">
+                <Label>القسم (بالعربية)</Label>
                 <Input required value={formData.category} onChange={e => setFormData({...formData, category: e.target.value})} />
               </div>
               <div className="space-y-2">
-                <Label>الموقع (Location)</Label>
+                <Label>القسم (بالإنجليزية)</Label>
+                <Input value={formData.categoryEn || ''} onChange={e => setFormData({...formData, categoryEn: e.target.value})} />
+              </div>
+              <div className="space-y-2">
+                <Label>الموقع (بالعربية)</Label>
                 <Input required value={formData.location} onChange={e => setFormData({...formData, location: e.target.value})} />
               </div>
               <div className="space-y-2">
-                <Label>المساحة (Area)</Label>
+                <Label>الموقع (بالإنجليزية)</Label>
+                <Input value={formData.locationEn || ''} onChange={e => setFormData({...formData, locationEn: e.target.value})} />
+              </div>
+              <div className="space-y-2">
+                <Label>المساحة (بالعربية)</Label>
                 <Input value={formData.area} onChange={e => setFormData({...formData, area: e.target.value})} />
+              </div>
+              <div className="space-y-2">
+                <Label>المساحة (بالإنجليزية)</Label>
+                <Input value={formData.areaEn || ''} onChange={e => setFormData({...formData, areaEn: e.target.value})} />
               </div>
               <div className="space-y-2">
                 <Label>سنة التنفيذ</Label>
@@ -139,9 +145,15 @@ export default function PortfolioAdmin() {
               </div>
             </div>
             
-            <div className="space-y-2">
-              <Label>الوصف</Label>
-              <Textarea required value={formData.description} onChange={e => setFormData({...formData, description: e.target.value})} />
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <Label>الوصف (بالعربية)</Label>
+                <Textarea required value={formData.description} onChange={e => setFormData({...formData, description: e.target.value})} />
+              </div>
+              <div className="space-y-2">
+                <Label>الوصف (بالإنجليزية)</Label>
+                <Textarea value={formData.descriptionEn || ''} onChange={e => setFormData({...formData, descriptionEn: e.target.value})} />
+              </div>
             </div>
 
             <div className="space-y-2">

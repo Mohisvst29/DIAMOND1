@@ -4,15 +4,21 @@ import { useState, useEffect, useRef } from "react"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Link } from "@/navigation"
-import { ArrowLeft, MapPin, Ruler, Eye, Filter } from "lucide-react"
+import { ArrowLeft, ArrowRight, MapPin, Ruler, Eye, Filter } from "lucide-react"
+import { useLocale, useTranslations } from "next-intl"
 
 interface Project {
   _id: string
   title: string
+  titleEn?: string
   location: string
+  locationEn?: string
   category: string
+  categoryEn?: string
   description: string
+  descriptionEn?: string
   area: string
+  areaEn?: string
   year: string
   image: string
   href?: string
@@ -38,6 +44,9 @@ export default function ProjectsGallery({ projects }: ProjectsGalleryProps) {
   const [isVisible, setIsVisible] = useState(false)
   const [hoveredProject, setHoveredProject] = useState<string | null>(null)
   const sectionRef = useRef<HTMLElement>(null)
+  const locale = useLocale()
+  const t = useTranslations("Common")
+  const tProjects = useTranslations("Projects")
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -70,9 +79,9 @@ export default function ProjectsGallery({ projects }: ProjectsGalleryProps) {
           className={`text-center mb-16 transition-all duration-1000 delay-300 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"
             }`}
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-[#0D2240] mb-4">مشاريعنا المميزة</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-[#0D2240] mb-4">{tProjects("featuredProjects")}</h2>
           <p className="text-lg text-[#2D3640] max-w-2xl mx-auto">
-            مجموعة مختارة من أفضل مشاريعنا التي تعكس جودة عملنا وخبرتنا
+            {tProjects("featuredProjectsDesc")}
           </p>
         </div>
 
@@ -82,7 +91,7 @@ export default function ProjectsGallery({ projects }: ProjectsGalleryProps) {
         >
           <div className="flex items-center gap-2 mb-4 w-full justify-center">
             <Filter className="w-5 h-5 text-[#0D2240]" />
-            <span className="text-[#0D2240] font-medium">تصفية المشاريع:</span>
+            <span className="text-[#0D2240] font-medium">{t("filterProjects")}:</span>
           </div>
           {categories.map((category, index) => (
             <Button
@@ -132,27 +141,31 @@ export default function ProjectsGallery({ projects }: ProjectsGalleryProps) {
 
               <div className="p-6">
                 <h3 className="text-xl font-bold text-[#0D2240] mb-3 group-hover:text-[#C4D600] transition-colors duration-300">
-                  {project.title}
+                  {locale === 'en' && project.titleEn ? project.titleEn : project.title}
                 </h3>
                 <p className="text-[#2D3640] mb-4 leading-relaxed group-hover:text-[#0D2240] transition-colors duration-300">
-                  {project.description}
+                  {locale === 'en' && project.descriptionEn ? project.descriptionEn : project.description}
                 </p>
 
                 <div className="flex items-center gap-4 text-sm text-[#2D3640] mb-4">
                   <div className="flex items-center gap-1 group-hover:text-[#C4D600] transition-colors duration-300">
                     <MapPin className="w-4 h-4" />
-                    <span>{project.location}</span>
+                    <span>{locale === 'en' && project.locationEn ? project.locationEn : project.location}</span>
                   </div>
                   <div className="flex items-center gap-1 group-hover:text-[#C4D600] transition-colors duration-300">
                     <Ruler className="w-4 h-4" />
-                    <span>{project.area}</span>
+                    <span>{locale === 'en' && project.areaEn ? project.areaEn : project.area}</span>
                   </div>
                 </div>
 
                 <Link href={project.href || `/projects/${project._id}`}>
                   <Button className="w-full bg-[#0D2240] hover:bg-[#C4D600] hover:text-[#0D2240] text-white transition-all duration-300 group-hover:shadow-lg transform group-hover:-translate-y-1">
-                    تفاصيل المشروع
-                    <ArrowLeft className="w-4 h-4 mr-2 group-hover:translate-x-1 transition-transform duration-300" />
+                    {t("projectDetails")}
+                    {locale === 'en' ? (
+                      <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
+                    ) : (
+                      <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform duration-300" />
+                    )}
                   </Button>
                 </Link>
               </div>
@@ -160,7 +173,7 @@ export default function ProjectsGallery({ projects }: ProjectsGalleryProps) {
           ))}
           {filteredProjects.length === 0 && (
             <div className="col-span-full text-center py-12 text-gray-500">
-              لا توجد مشاريع في هذا القسم.
+              {t("noProjectsFound")}
             </div>
           )}
         </div>

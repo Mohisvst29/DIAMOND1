@@ -4,7 +4,8 @@ import { useState } from "react"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Link } from "@/navigation"
-import { ArrowLeft, Building, Wrench, Palette, Settings, Zap, Hammer, RefreshCw, Bold, Sparkles, Shield, Truck, Home } from "lucide-react"
+import { ArrowLeft, ArrowRight, ArrowUpRight, Building, Wrench, Palette, Settings, Zap, Hammer, RefreshCw, Bold, Sparkles, Shield, Truck, Home } from "lucide-react"
+import { useLocale, useTranslations } from "next-intl"
 
 // Map icon names to components
 const IconMap: { [key: string]: any } = {
@@ -25,7 +26,9 @@ const IconMap: { [key: string]: any } = {
 interface Service {
   _id: string
   title: string
+  titleEn?: string
   description: string
+  descriptionEn?: string
   icon: string
   href?: string
   features?: string[]
@@ -54,13 +57,13 @@ export default function ServicesGrid({ services = [] }: { services?: Service[] }
         <div className="text-center mb-16">
           <div className="inline-flex items-center gap-2 bg-[#C4D600]/10 px-4 py-2 rounded-full mb-4">
             <Sparkles className="w-5 h-5 text-[#C4D600]" />
-            <span className="text-[#0D2240] font-semibold">خدماتنا المتميزة</span>
+            <span className="text-[#0D2240] font-semibold">{t("ourPremiumServices")}</span>
           </div>
           <h2 className="text-3xl md:text-5xl font-bold text-[#0D2240] mb-6">
-            حلول متكاملة لكل احتياجاتك
+            {t("integratedSolutions")}
           </h2>
           <p className="text-lg text-[#2D3640] max-w-3xl mx-auto leading-relaxed">
-            نقدم مجموعة شاملة من الخدمات المتخصصة في مجال البناء والتشطيب، مع التزامنا بالجودة والاحترافية في كل مشروع
+            {t("integratedSolutionsDesc")}
           </p>
         </div>
 
@@ -144,7 +147,7 @@ export default function ServicesGrid({ services = [] }: { services?: Service[] }
                         ))}
                         {service.features.length > 2 && (
                           <span className="text-xs bg-[#C4D600]/10 text-[#0D2240] px-3 py-1 rounded-full">
-                            +{service.features.length - 2} أخرى
+                            +{service.features.length - 2} {t("more")}
                           </span>
                         )}
                       </div>
@@ -153,8 +156,12 @@ export default function ServicesGrid({ services = [] }: { services?: Service[] }
 
                   <Link href={service.href || "#"}>
                     <Button className="w-full bg-[#0D2240] hover:bg-[#1a3a5c] text-white group-hover:bg-[#C4D600] group-hover:text-[#0D2240] transition-all duration-300 shadow-lg hover:shadow-xl">
-                      تفاصيل الخدمة
-                      <ArrowLeft className="w-4 h-4 mr-2 group-hover:translate-x-1 transition-transform" />
+                      {t("serviceDetails")}
+                      {locale === 'en' ? (
+                        <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                      ) : (
+                        <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" />
+                      )}
                     </Button>
                   </Link>
                 </div>
@@ -165,17 +172,17 @@ export default function ServicesGrid({ services = [] }: { services?: Service[] }
 
         {/* Bottom CTA */}
         <div className="text-center mt-16">
-          <div className="inline-flex items-center gap-3 bg-white px-8 py-4 rounded-2xl shadow-lg border border-gray-100">
+          <div className="inline-flex items-center gap-3 bg-white px-8 py-4 rounded-2xl shadow-lg border border-gray-100 flex-wrap justify-center">
             <div className="bg-[#C4D600] p-2 rounded-full">
               <Truck className="w-5 h-5 text-[#0D2240]" />
             </div>
-            <div className="text-right">
-              <p className="font-semibold text-[#0D2240]">هل تحتاج استشارة؟</p>
-              <p className="text-sm text-gray-600">تواصل معنا اليوم</p>
+            <div className={locale === 'en' ? "text-left" : "text-right"}>
+              <p className="font-semibold text-[#0D2240]">{t("needConsultation")}</p>
+              <p className="text-sm text-gray-600">{t("contactUsToday")}</p>
             </div>
             <Link href="/contact">
-              <Button className="bg-[#0D2240] hover:bg-[#1a3a5c] text-white ml-4">
-                تواصل الآن
+              <Button className="bg-[#0D2240] hover:bg-[#1a3a5c] text-white mx-4">
+                {t("contactNow")}
               </Button>
             </Link>
           </div>

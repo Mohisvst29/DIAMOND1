@@ -15,13 +15,8 @@ export default function BlogAdmin() {
   const [loading, setLoading] = useState(true)
   const [editingId, setEditingId] = useState<string | null>(null)
   
-  const [formData, setFormData] = useState({
-    title: "",
-    excerpt: "",
-    content: "",
-    author: "",
-    featuredImage: "",
-    isPublished: true
+  const [formData, setFormData] = useState<Partial<any>>({
+    title: "", titleEn: "", excerpt: "", excerptEn: "", content: "", contentEn: "", author: "", authorEn: "", featuredImage: "", isPublished: true
   })
 
   const fetchPosts = () => {
@@ -40,16 +35,16 @@ export default function BlogAdmin() {
   }, [])
 
   const resetForm = () => {
-    setFormData({ title: "", excerpt: "", content: "", author: "", featuredImage: "", isPublished: true })
+    setFormData({ title: "", titleEn: "", excerpt: "", excerptEn: "", content: "", contentEn: "", author: "", authorEn: "", featuredImage: "", isPublished: true })
     setEditingId(null)
   }
 
   const handleEdit = (post: any) => {
     setFormData({
-      title: post.title || "",
-      excerpt: post.excerpt || "",
-      content: post.content || "",
-      author: post.author || "",
+      title: post.title || "", titleEn: post.titleEn || "",
+      excerpt: post.excerpt || "", excerptEn: post.excerptEn || "",
+      content: post.content || "", contentEn: post.contentEn || "",
+      author: post.author || "", authorEn: post.authorEn || "",
       featuredImage: post.featuredImage || "",
       isPublished: post.isPublished !== undefined ? post.isPublished : true
     })
@@ -106,23 +101,43 @@ export default function BlogAdmin() {
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid md:grid-cols-2 gap-6">
               <div className="space-y-2">
-                <Label>عنوان المقال</Label>
+                <Label>عنوان المقال (بالعربية)</Label>
                 <Input required value={formData.title} onChange={e => setFormData({...formData, title: e.target.value})} />
               </div>
               <div className="space-y-2">
-                <Label>الكاتب</Label>
+                <Label>عنوان المقال (بالإنجليزية)</Label>
+                <Input value={formData.titleEn || ''} onChange={e => setFormData({...formData, titleEn: e.target.value})} />
+              </div>
+              <div className="space-y-2">
+                <Label>الكاتب (بالعربية)</Label>
                 <Input value={formData.author} onChange={e => setFormData({...formData, author: e.target.value})} />
+              </div>
+              <div className="space-y-2">
+                <Label>الكاتب (بالإنجليزية)</Label>
+                <Input value={formData.authorEn || ''} onChange={e => setFormData({...formData, authorEn: e.target.value})} />
               </div>
             </div>
             
-            <div className="space-y-2">
-              <Label>مقتطف (Excerpt)</Label>
-              <Textarea value={formData.excerpt} onChange={e => setFormData({...formData, excerpt: e.target.value})} />
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <Label>مقتطف (Excerpt) - بالعربية</Label>
+                <Textarea value={formData.excerpt} onChange={e => setFormData({...formData, excerpt: e.target.value})} />
+              </div>
+              <div className="space-y-2">
+                <Label>مقتطف (Excerpt) - بالإنجليزية</Label>
+                <Textarea value={formData.excerptEn || ''} onChange={e => setFormData({...formData, excerptEn: e.target.value})} />
+              </div>
             </div>
 
-            <div className="space-y-2">
-              <Label>محتوى المقال (دعم HTML/نص)</Label>
-              <Textarea className="min-h-[200px]" required value={formData.content} onChange={e => setFormData({...formData, content: e.target.value})} />
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <Label>محتوى المقال (بالعربية)</Label>
+                <Textarea className="min-h-[200px]" required value={formData.content} onChange={e => setFormData({...formData, content: e.target.value})} />
+              </div>
+              <div className="space-y-2">
+                <Label>محتوى المقال (بالإنجليزية)</Label>
+                <Textarea className="min-h-[200px]" value={formData.contentEn || ''} onChange={e => setFormData({...formData, contentEn: e.target.value})} />
+              </div>
             </div>
 
             <div className="grid md:grid-cols-2 gap-6">

@@ -5,11 +5,15 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Link } from "@/navigation"
 import { ChevronDown, ChevronUp } from "lucide-react"
+import { useLocale, useTranslations } from "next-intl"
 
 export default function AboutSection({ settings }: { settings?: any }) {
   const [isExpanded, setIsExpanded] = useState(false)
   const [isVisible, setIsVisible] = useState(false)
   const sectionRef = useRef<HTMLElement>(null)
+  const locale = useLocale()
+  const t = useTranslations("Common")
+  const tAbout = useTranslations("About")
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -42,9 +46,11 @@ export default function AboutSection({ settings }: { settings?: any }) {
               isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-[-50px]"
             }`}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-[#0D2240] mb-6">من نحن</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-[#0D2240] mb-6">{tAbout("title")}</h2>
             <p className="text-lg text-[#2D3640] leading-relaxed mb-6 whitespace-pre-line">
-              {settings?.home?.aboutSummary || "شركة Diamond Growth هي شركة مقاولات متخصصة في الأعمال المدنية، الاتصالات، أنظمة التيار الخفيف، والخدمات الكهروميكانيكية.\n\nالمقر الرئيسي في الأردن، منذ عام 2012\nHead office in Jordan, since 2012"}
+              {locale === 'en' && settings?.home?.aboutSummaryEn 
+                ? settings.home.aboutSummaryEn 
+                : settings?.home?.aboutSummary || "شركة Diamond Growth هي شركة مقاولات متخصصة في الأعمال المدنية، الاتصالات، أنظمة التيار الخفيف، والخدمات الكهروميكانيكية.\n\nالمقر الرئيسي في الأردن، منذ عام 2012\nHead office in Jordan, since 2012"}
             </p>
 
             <div
@@ -53,14 +59,16 @@ export default function AboutSection({ settings }: { settings?: any }) {
               }`}
             >
               <p className="text-lg text-[#2D3640] leading-relaxed mb-4 whitespace-pre-line">
-                {settings?.about?.content || "نقدم حلول متكاملة تشمل التوريد، دراسات الجدوى، التصميم، الهندسة، إدارة المشاريع، التنفيذ، وتسليم المشاريع الجاهزة."}
+                {locale === 'en' && settings?.about?.contentEn 
+                  ? settings.about.contentEn 
+                  : settings?.about?.content || "نقدم حلول متكاملة تشمل التوريد، دراسات الجدوى، التصميم، الهندسة، إدارة المشاريع، التنفيذ، وتسليم المشاريع الجاهزة."}
               </p>
             </div>
 
             <div className="flex gap-4 items-center">
               <Link href="/about">
                 <Button size="lg" className="bg-[#C4D600] hover:bg-[#e6a61a] text-[#0D2240] font-bold">
-                  اقرأ المزيد
+                  {t("readMore")}
                 </Button>
               </Link>
 
@@ -72,12 +80,12 @@ export default function AboutSection({ settings }: { settings?: any }) {
                 {isExpanded ? (
                   <>
                     <ChevronUp className="w-4 h-4 ml-2 transition-transform duration-300" />
-                    عرض اقل
+                    {t("showLess")}
                   </>
                 ) : (
                   <>
                     <ChevronDown className="w-4 h-4 ml-2 transition-transform duration-300" />
-                    عرض المزيد
+                    {t("showMore")}
                   </>
                 )}
               </Button>
@@ -90,10 +98,10 @@ export default function AboutSection({ settings }: { settings?: any }) {
             }`}
           >
             {[
-              { number: `+${settings?.achievements?.projectsCompleted || 110}`, label: "مشروع مكتمل", delay: "delay-100" },
-              { number: `+${settings?.achievements?.satisfiedClients || 100}`, label: "عميل راضٍ", delay: "delay-200" },
-              { number: `${settings?.achievements?.yearsExperience || 15}`, label: "سنوات الخبرة", delay: "delay-300" },
-              { number: `+${settings?.achievements?.experts || 45}`, label: "خبير ومهندس", delay: "delay-400" },
+              { number: `+${settings?.achievements?.projectsCompleted || 110}`, label: tAbout("completedProjects"), delay: "delay-100" },
+              { number: `+${settings?.achievements?.satisfiedClients || 100}`, label: tAbout("satisfiedClients"), delay: "delay-200" },
+              { number: `${settings?.achievements?.yearsExperience || 15}`, label: tAbout("yearsExperience"), delay: "delay-300" },
+              { number: `+${settings?.achievements?.experts || 45}`, label: tAbout("experts"), delay: "delay-400" },
             ].map((item, index) => (
               <Card
                 key={index}

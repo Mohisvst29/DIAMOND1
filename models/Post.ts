@@ -3,13 +3,20 @@ import mongoose, { Schema, Document, Model } from "mongoose"
 export interface IPost extends Document {
     slug: string
     title: string
+    titleEn?: string
     excerpt?: string
+    excerptEn?: string
     content?: string
+    contentEn?: string
     featuredImage?: string
     isPublished: boolean
     publishedAt?: Date
     author?: string
+    authorEn?: string
+    category?: string
+    categoryEn?: string
     tags: string[]
+    views: number
     // SEO fields
     autoSEO?: boolean
     autoInternalLinks?: boolean
@@ -37,13 +44,20 @@ const PostSchema = new Schema<IPost>(
     {
         slug: { type: String, required: true, unique: true },
         title: { type: String, required: true },
+        titleEn: { type: String },
         excerpt: String,
+        excerptEn: String,
         content: String,
+        contentEn: String,
         featuredImage: String,
         isPublished: { type: Boolean, default: false },
         publishedAt: Date,
         author: String,
+        authorEn: String,
+        category: String,
+        categoryEn: String,
         tags: [String],
+        views: { type: Number, default: 0 },
         // SEO fields
         autoSEO: { type: Boolean, default: true },
         autoInternalLinks: { type: Boolean, default: true },
